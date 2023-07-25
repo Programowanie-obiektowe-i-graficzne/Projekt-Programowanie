@@ -21,6 +21,38 @@ namespace Projekt_Programowanie.Data
         public DbSet<Uzytkownik> Uzytkownicy { get; set; }
         public DbSet<Wzor> Wzory { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
+        => options.UseSqlite($"Data Source=C:\\Users\\grazi\\source\\repos\\Projekt-Programowanie\\Projekt-Programowanie\\Data\\krzyzowki.db");
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Krzyzowka>()
+                .HasOne(k => k.Pytanie_1)
+                .WithMany()
+                .HasForeignKey(k => k.Pyt1ID);
+
+            modelBuilder.Entity<Krzyzowka>()
+                .HasOne(k => k.Pytanie_2)
+                .WithMany()
+                .HasForeignKey(k => k.Pyt2ID);
+
+            modelBuilder.Entity<Krzyzowka>()
+                .HasOne(k => k.Pytanie_3)
+                .WithMany()
+                .HasForeignKey(k => k.Pyt3ID);
+
+            modelBuilder.Entity<Krzyzowka>()
+                .HasOne(k => k.Pytanie_4)
+                .WithMany()
+                .HasForeignKey(k => k.Pyt4ID);
+
+            modelBuilder.Entity<Krzyzowka>()
+                .HasOne(k => k.Pytanie_5)
+                .WithMany()
+                .HasForeignKey(k => k.Pyt5ID);
+
+            modelBuilder.Entity<Krzyzowka>()
+                .HasOne(k => k.Pytanie_6)
+                .WithMany()
+                .HasForeignKey(k => k.Pyt6ID);
+        }
     }
 }

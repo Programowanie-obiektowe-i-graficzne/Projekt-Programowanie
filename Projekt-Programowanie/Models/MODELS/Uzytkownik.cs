@@ -1,7 +1,10 @@
-﻿namespace Projekt_Programowanie.Models.MODELS
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Projekt_Programowanie.Models.MODELS
 {
     public class Uzytkownik
     {
+        [Key]
         public int ID_Uzytkownik { get; set; }
         public string Nazwa { get; set; }
         public int Najlepszy_Czas { get; set; }
