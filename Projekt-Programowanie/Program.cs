@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Projekt_Programowanie.Data;
+using Projekt_Programowanie.Interfaces;
+using Projekt_Programowanie.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
