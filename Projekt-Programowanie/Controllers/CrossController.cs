@@ -15,15 +15,19 @@ namespace Projekt_Programowanie.Controllers
             _crossRepository = crossRepository;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Pytanie>))]
-        public IActionResult GetWzory()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Krzyzowka>))]
+        public IActionResult GetKrzyzowki()
         {
-            var wzory = _crossRepository.getWzory();
+            var wzory = _crossRepository.getCross();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             return Ok(wzory);
         }
+        [HttpGet("{CrossId}")]
+        [ProducesResponseType(200, Type=typeof(Krzyzowka))]
+        [ProducesResponseType(400)]
+
     }
 }

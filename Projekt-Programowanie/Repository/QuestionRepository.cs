@@ -12,14 +12,26 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        public ICollection<Pytanie> GetPytania()
+        public ICollection<Pytanie> getPytania()
         {
             return _context.Pytania.OrderBy(p => p.ID_Pytania).ToList();
         }
 
-        public ICollection<Pytanie> getPytania()
+        public Pytanie GetPytanie(int id)
         {
-            throw new NotImplementedException();
+            return _context.Pytania.Where(p => p.ID_Pytania == id).FirstOrDefault();
+        }
+        public Pytanie GetPytanie(string pytanie)
+        {
+            return _context.Pytania.Where(p => p.Tresc == pytanie).FirstOrDefault();
+        }
+        ICollection<Pytanie> getPytanieTrudnosc(int trudnosc)
+        {
+            return _context.Pytania.Where(p => p.Trudnosc==trudnosc).ToList();
+        }
+        ICollection<Pytanie> getPytanieOdpowiedz(Slowo odpowiedz)
+        {
+            return _context.Pytania.Where(p => p.Odpowiedz == odpowiedz).ToList();
         }
     }
 }

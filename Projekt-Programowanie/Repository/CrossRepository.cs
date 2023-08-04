@@ -12,7 +12,7 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        public ICollection<Wzor> getWzory()
+        /*public ICollection<Wzor> getWzory()
         {
             throw new NotImplementedException();
         }
@@ -40,6 +40,22 @@ namespace Projekt_Programowanie.Repository
             int[,] tab = new int[8, 8];
             
             return 0;
+        }*/
+        public ICollection<Krzyzowka> getKrzyzowki()
+        {
+            return _context.Krzyzowki.OrderBy(p => p.ID_Krzyzowki).ToList();
+        }
+        public Krzyzowka GetKrzyzowka(int id)
+        {
+            return _context.Krzyzowki.Where(p => p.ID_Krzyzowki == id).FirstOrDefault();
+        }
+        ICollection<Krzyzowka> getKrzyzowkiTrudnosc(int trudnosc)
+        {
+            return _context.Krzyzowki.Where(p => p.Trudnosc==trudnosc).ToList();
+        }
+        ICollection<Krzyzowka> getKrzyzowkiWzor(Wzor wzor)
+        {
+            return _context.Krzyzowki.Where(p => p.Wzor == wzor).ToList();
         }
     }
 }
