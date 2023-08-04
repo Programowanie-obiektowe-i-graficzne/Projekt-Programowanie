@@ -11,13 +11,17 @@ namespace Projekt_Programowanie.Repository
         {
             _context = context;
         }
-        public Uzytkownik GetUzytkownik(int id)
+        public Uzytkownik GetUser(int id)
         {
             return _context.Uzytkownicy.Where(p => p.ID_Uzytkownik == id).FirstOrDefault();
         }
-        public Uzytkownik GetUzytkownik(string name)
+        public Uzytkownik GetUser(string name)
         {
             return _context.Uzytkownicy.Where(p => p.Nazwa == name).FirstOrDefault();
+        }
+        public ICollection<Uzytkownik> getUsers()
+        {
+            return _context.Uzytkownicy.OrderBy(p => p.ID_Uzytkownik).ToList();
         }
     }
 }
