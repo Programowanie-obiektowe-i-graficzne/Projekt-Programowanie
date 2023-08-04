@@ -17,7 +17,26 @@ namespace Projekt_Programowanie.Controllers
         {
             return View();
         }
-
+        public IActionResult Dodaj()
+        {
+            return View();
+        }
+        public IActionResult Lista()
+        {
+            return View();
+        }
+        public IActionResult Generator()
+        {
+            return View();
+        }
+        public IActionResult Autorzy()
+        {
+            return View();
+        }
+        public IActionResult Opis()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

@@ -1,0 +1,40 @@
+﻿@using Projekt_Programowanie.Models.MODELS
+@model Pytanie
+@{
+    ViewData["Title"] = "Dodaj pytanie lub odpowiedź";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Dodaj Pytanie</h4>
+        </p>
+        <div class="form-group">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Dodaj pytanie">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Tresc" class="control-label"></label>
+                        <input asp-for="Tresc" class="form-control" />
+                        <span asp-validation-for="Tresc" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Trudnosc" class="control-label"></label>
+                        <input asp-for="Trudnosc" class="form-control" />
+                        <span asp-validation-for="Trudnosc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Odpowiedz" class="control-label"></label>
+                        <textarea asp-for="Odpowiedz" class="form-control"> </textarea>
+                        <span asp-validation-for="Odpowiedz" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3 mb-5">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Dodaj Pytanie" />
+                        <a class="btn btn-outline-secondary" asp-controller="Movies" asp-action="Index">Anuluj</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
