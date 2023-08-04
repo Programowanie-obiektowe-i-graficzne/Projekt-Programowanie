@@ -36,5 +36,6 @@ namespace Projekt_Programowanie.Repository
         {
             return _context.Slowa.Where(p => p.Kategoria == kategoria).ToList();
         }
+
     }
 }
