@@ -17,12 +17,36 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Uzytkownik>))]
         public IActionResult GetUzytkownicy()
         {
-            var uzytkownicy = _userRepository.getUsers();
+            var uzytkownicy = _userRepository.getUzytkownicy();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             return Ok(uzytkownicy);
+        }
+        [HttpGet("{userId}")]
+        [ProducesResponseType(200, Type = typeof(Uzytkownik))]
+        [ProducesResponseType(400)]
+        public IActionResult GetUzytkownik(int userId)
+        {
+            var uzytkownik = _userRepository.GetUzytkownik(userId);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(uzytkownik);
+        }
+        [HttpGet("{userName}")]
+        [ProducesResponseType(200, Type = typeof(Uzytkownik))]
+        [ProducesResponseType(400)]
+        public IActionResult GetUzytkownik(string userName)
+        {
+            var uzytkownik = _userRepository.GetUzytkownik(userName);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(uzytkownik);
         }
     }
 }

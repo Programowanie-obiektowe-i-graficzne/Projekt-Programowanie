@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
+using Projekt_Programowanie.Repository;
 
 namespace Projekt_Programowanie.Controllers
 {
@@ -18,6 +19,18 @@ namespace Projekt_Programowanie.Controllers
         public IActionResult GetWzory()
         {
             var wzory = _patternRepository.getWzory();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(wzory);
+        }
+        [HttpGet("{patternSize}")]
+        [ProducesResponseType(200, Type = typeof(Wzor))]
+        [ProducesResponseType(400)]
+        public IActionResult GetWzoryWielkosc(int patternSize)
+        {
+            var wzory = _patternRepository.GetWzoryWielkosc(patternSize);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

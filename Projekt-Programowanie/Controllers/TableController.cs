@@ -18,7 +18,19 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<TabelaWynikow>))]
         public IActionResult GetTabelaWynikow()
         {
-            var tabela = _tableRepository.getTabela();
+            var tabela = _tableRepository.getTabelaWynikow();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(tabela);
+        }
+        [HttpGet("{tableUser}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<TabelaWynikow>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetWynikiUzytkownik(Uzytkownik tableUser)
+        {
+            var tabela = _tableRepository.GetWynikiUzytkownik(tableUser);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

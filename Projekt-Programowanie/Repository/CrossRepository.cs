@@ -49,6 +49,10 @@ namespace Projekt_Programowanie.Repository
         {
             return _context.Krzyzowki.Where(p => p.ID_Krzyzowki == id).FirstOrDefault();
         }
+        public bool KrzyzowkaExist(int id)
+        {
+            return _context.Krzyzowki.Any(p => p.ID_Krzyzowki == id);
+        }
         ICollection<Krzyzowka> getKrzyzowkiTrudnosc(int trudnosc)
         {
             return _context.Krzyzowki.Where(p => p.Trudnosc==trudnosc).ToList();

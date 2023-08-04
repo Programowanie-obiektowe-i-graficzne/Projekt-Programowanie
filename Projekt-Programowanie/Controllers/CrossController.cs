@@ -18,16 +18,52 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Krzyzowka>))]
         public IActionResult GetKrzyzowki()
         {
-            var wzory = _crossRepository.getCross();
+            var krzyzowki = _crossRepository.getKrzyzowki();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return Ok(wzory);
+            return Ok(krzyzowki);
         }
-        [HttpGet("{CrossId}")]
+        [HttpGet("{crossId}")]
         [ProducesResponseType(200, Type=typeof(Krzyzowka))]
         [ProducesResponseType(400)]
-
+        public IActionResult GetKrzyzowka(int crossId)
+        {
+            if (!_crossRepository.KrzyzowkaExist(crossId))
+            {
+                return NotFound();
+            }
+            var krzyzowka = _crossRepository.GetKrzyzowka(crossId);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(krzyzowka);
+        }
+        [HttpGet("{crossDificulty}")]
+        [ProducesResponseType(200, Type = typeof(Krzyzowka))]
+        [ProducesResponseType(400)]
+        public IActionResult GetKrzyzowkiTrudnosc(int crossDifficulty)
+        {
+            var krzyzowki = _crossRepository.GetKrzyzowkiTrudnosc(crossDifficulty);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(krzyzowki);
+        }
+        [HttpGet("{crossPattern}")]
+        [ProducesResponseType(200, Type = typeof(Krzyzowka))]
+        [ProducesResponseType(400)]
+        public IActionResult GetKrzyzowkiWzor(Wzor crossPattern)
+        {
+            var krzyzowki = _crossRepository.GetKrzyzowkiWzor(crossPattern);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(krzyzowki);
+        }
     }
 }

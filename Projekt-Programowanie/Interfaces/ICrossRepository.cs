@@ -6,7 +6,8 @@ namespace Projekt_Programowanie.Interfaces
     {
         ICollection<Krzyzowka> getKrzyzowki();
         Krzyzowka GetKrzyzowka(int id);
-        ICollection<Krzyzowka> getKrzyzowkiTrudnosc(int trudnosc);
-        ICollection<Krzyzowka> getKrzyzowkiWzor(Wzor wzor);
+        bool KrzyzowkaExist(int id);
+        ICollection<Krzyzowka> GetKrzyzowkiTrudnosc(int trudnosc);
+        ICollection<Krzyzowka> GetKrzyzowkiWzor(Wzor wzor);
     }
 }

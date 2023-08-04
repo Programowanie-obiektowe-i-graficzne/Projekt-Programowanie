@@ -25,5 +25,29 @@ namespace Projekt_Programowanie.Controllers
             }
             return Ok(slowa);
         }
+        [HttpGet("{wordId}")]
+        [ProducesResponseType(200, Type = typeof(Slowo))]
+        [ProducesResponseType(400)]
+        public IActionResult GetSlowo(int wordId)
+        {
+            var slowo = _wordRepository.GetSlowo(wordId);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(slowo);
+        }
+        [HttpGet("{wordLength}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Slowo>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetSlowoDlugosc(int wordLength)
+        {
+            var slowa = _wordRepository.GetSlowoDlugosc(wordLength);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(slowa);
+        }
     }
 }

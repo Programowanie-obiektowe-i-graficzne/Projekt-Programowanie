@@ -7,7 +7,7 @@ namespace Projekt_Programowanie.Interfaces
         ICollection<Pytanie> getPytania();
         Pytanie GetPytanie(int id);
         Pytanie GetPytanie(string pytanie);
-        ICollection<Pytanie> getPytanieTrudnosc(int trudnosc);
-        ICollection<Pytanie> getPytanieOdpowiedz(Slowo odpowiedz);
+        ICollection<Pytanie> GetPytaniaTrudnosc(int trudnosc);
+        ICollection<Pytanie> GetPytaniaOdpowiedz(Slowo odpowiedz);
     }
 }
