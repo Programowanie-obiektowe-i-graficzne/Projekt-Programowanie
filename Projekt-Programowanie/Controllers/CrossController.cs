@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Projekt_Programowanie.Interfaces;
+using Projekt_Programowanie.Models.DTO;
 using Projekt_Programowanie.Models.MODELS;
 using Projekt_Programowanie.Repository;
 
@@ -10,15 +12,17 @@ namespace Projekt_Programowanie.Controllers
     public class CrossController : Controller
     {
         private readonly ICrossRepository _crossRepository;
-        public CrossController(ICrossRepository crossRepository)
+        private readonly IMapper _mapper;
+        public CrossController(ICrossRepository crossRepository, IMapper mapper)
         {
             _crossRepository = crossRepository;
+            _mapper = mapper;
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Krzyzowka>))]
         public IActionResult GetKrzyzowki()
         {
-            var krzyzowki = _crossRepository.getKrzyzowki();
+            var krzyzowki = _mapper.Map<List<KrzyzowkaDTO>>(_crossRepository.getKrzyzowki());
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -34,7 +38,7 @@ namespace Projekt_Programowanie.Controllers
             {
                 return NotFound();
             }
-            var krzyzowka = _crossRepository.GetKrzyzowka(crossId);
+            var krzyzowka = _mapper.Map<Krzyzowka>(_crossRepository.GetKrzyzowka(crossId));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -46,7 +50,7 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetKrzyzowkiTrudnosc(int crossDifficulty)
         {
-            var krzyzowki = _crossRepository.GetKrzyzowkiTrudnosc(crossDifficulty);
+            var krzyzowki = _mapper.Map<List<KrzyzowkaDTO>>(_crossRepository.GetKrzyzowkiTrudnosc(crossDifficulty));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -58,7 +62,7 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetKrzyzowkiWzor(Wzor crossPattern)
         {
-            var krzyzowki = _crossRepository.GetKrzyzowkiWzor(crossPattern);
+            var krzyzowki = _mapper.Map<List<KrzyzowkaDTO>>(_crossRepository.GetKrzyzowkiWzor(crossPattern));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

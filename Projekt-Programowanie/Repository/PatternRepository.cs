@@ -19,7 +19,8 @@ namespace Projekt_Programowanie.Repository
         {
             return _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefault();
         }
-        ICollection<Wzor> GetWzoryWielkosc(int rozmiar)
+
+        ICollection<Wzor> IPatternRepository.GetWzoryWielkosc(int rozmiar)
         {
             return _context.Wzory.Where(p => p.Rozmiar == rozmiar).ToList();
         }

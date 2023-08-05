@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Projekt_Programowanie.Interfaces;
+using Projekt_Programowanie.Models.DTO;
 using Projekt_Programowanie.Models.MODELS;
 using Projekt_Programowanie.Repository;
 
@@ -10,15 +12,17 @@ namespace Projekt_Programowanie.Controllers
     public class TableController : Controller
     {
         private readonly ITableRepository _tableRepository;
-        public TableController(ITableRepository tableRepository)
+        private readonly IMapper _mapper;
+        public TableController(ITableRepository tableRepository, IMapper mapper)
         {
-            _tableRepository = tableRepository; 
+            _tableRepository = tableRepository;
+            _mapper = mapper;
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<TabelaWynikow>))]
         public IActionResult GetTabelaWynikow()
         {
-            var tabela = _tableRepository.getTabelaWynikow();
+            var tabela = _mapper.Map<List<TabelaWynikowDTO>>(_tableRepository.getTabelaWynikow());
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -30,7 +34,7 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetWynikiUzytkownik(Uzytkownik tableUser)
         {
-            var tabela = _tableRepository.GetWynikiUzytkownik(tableUser);
+            var tabela = _mapper.Map<List<TabelaWynikowDTO>>(_tableRepository.GetWynikiUzytkownik(tableUser));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

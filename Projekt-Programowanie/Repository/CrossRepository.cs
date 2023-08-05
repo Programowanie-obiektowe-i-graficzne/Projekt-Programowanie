@@ -53,11 +53,11 @@ namespace Projekt_Programowanie.Repository
         {
             return _context.Krzyzowki.Any(p => p.ID_Krzyzowki == id);
         }
-        ICollection<Krzyzowka> getKrzyzowkiTrudnosc(int trudnosc)
+        public ICollection<Krzyzowka> GetKrzyzowkiTrudnosc(int trudnosc)
         {
             return _context.Krzyzowki.Where(p => p.Trudnosc==trudnosc).ToList();
         }
-        ICollection<Krzyzowka> getKrzyzowkiWzor(Wzor wzor)
+        public ICollection<Krzyzowka> GetKrzyzowkiWzor(Wzor wzor)
         {
             return _context.Krzyzowki.Where(p => p.Wzor == wzor).ToList();
         }

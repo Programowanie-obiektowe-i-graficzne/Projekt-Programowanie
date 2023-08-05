@@ -20,7 +20,7 @@ namespace Projekt_Programowanie.Repository
         {
             return _context.Slowa.Where(p => p.ID_Slowa == id).FirstOrDefault();
         }
-        ICollection<Slowo> GetSlowoDlugosc(int dlugosc)
+        public ICollection<Slowo> GetSlowoDlugosc(int dlugosc)
         {
             return _context.Slowa.Where(p => p.Dl_Slowa==dlugosc).ToList();
         }

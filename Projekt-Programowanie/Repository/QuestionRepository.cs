@@ -25,11 +25,13 @@ namespace Projekt_Programowanie.Repository
         {
             return _context.Pytania.Where(p => p.Tresc == pytanie).FirstOrDefault();
         }
-        ICollection<Pytanie> getPytanieTrudnosc(int trudnosc)
+
+        public ICollection<Pytanie> GetPytaniaTrudnosc(int trudnosc)
         {
-            return _context.Pytania.Where(p => p.Trudnosc==trudnosc).ToList();
+            return _context.Pytania.Where(p => p.Trudnosc == trudnosc).ToList();
         }
-        ICollection<Pytanie> getPytanieOdpowiedz(Slowo odpowiedz)
+
+        public ICollection<Pytanie> GetPytaniaOdpowiedz(Slowo odpowiedz)
         {
             return _context.Pytania.Where(p => p.Odpowiedz == odpowiedz).ToList();
         }

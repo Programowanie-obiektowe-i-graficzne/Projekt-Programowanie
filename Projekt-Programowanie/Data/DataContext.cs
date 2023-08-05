@@ -8,11 +8,8 @@ namespace Projekt_Programowanie.Data
     public class DataContext : DbContext
     {
         public string DbPath { get; }
-        public DataContext()
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "krzyzowki.db");
         }
         public DbSet<Krzyzowka> Krzyzowki { get; set; }
         public DbSet<Pytanie> Pytania { get; set; }

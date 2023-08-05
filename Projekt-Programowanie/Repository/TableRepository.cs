@@ -21,7 +21,7 @@ namespace Projekt_Programowanie.Repository
         {
             return _context.TabeleWynikow.Where(p => p.ID_Wynikow == id).FirstOrDefault();
         }
-        ICollection<TabelaWynikow> GetWynikiUzytkownik(Uzytkownik uzytkownik)
+        public ICollection<TabelaWynikow> GetWynikiUzytkownik(Uzytkownik uzytkownik)
         {
             return _context.TabeleWynikow.Where(p => p.Uzytkownicy==uzytkownik).ToList();
         }
