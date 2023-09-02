@@ -73,7 +73,10 @@ namespace Projekt_Programowanie.Repository
                 {
                     pomoc[wspX, wspY] = ',';
                 }
-                pomoc[wspX, wspY] = '.';
+                else
+                {
+                    pomoc[wspX, wspY] = '.';
+                }
                 if(kieru == 1)
                 {
                     wspX += 1;
@@ -115,6 +118,7 @@ namespace Projekt_Programowanie.Repository
             tab = wprowadz(slowo5, tab);
             tab = wprowadz(slowo6, tab);
 
+            Slowo slowo = GetSlowoDl(dlugosc(slowo1));
             
             return tab;
         }
