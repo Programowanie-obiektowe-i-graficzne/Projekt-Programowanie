@@ -22,7 +22,7 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Pytanie>))]
         public IActionResult GetWzory()
         {
-            var wzory = _mapper.Map<List<WzorDTO>(_patternRepository.getWzory());
+            var wzory = _mapper.Map<List<WzorDTO>>(_patternRepository.getWzory());
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
