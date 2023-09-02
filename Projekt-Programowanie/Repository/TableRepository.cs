@@ -12,14 +12,19 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        public ICollection<TabelaWynikow> getTabela()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICollection<TabelaWynikow> GetTabelaWynikow()
+        public ICollection<TabelaWynikow> getTabelaWynikow()
         {
             return _context.TabeleWynikow.OrderBy(p => p.ID_Wynikow).ToList();
         }
+
+        public TabelaWynikow GetWynik(int id)
+        {
+            return _context.TabeleWynikow.Where(p => p.ID_Wynikow == id).FirstOrDefault();
+        }
+        public ICollection<TabelaWynikow> GetWynikiUzytkownik(Uzytkownik uzytkownik)
+        {
+            return _context.TabeleWynikow.Where(p => p.Uzytkownicy==uzytkownik).ToList();
+        }
     }
 }
+

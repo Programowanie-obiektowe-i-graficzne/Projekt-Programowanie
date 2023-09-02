@@ -4,25 +4,28 @@
 }
 <style>
     #pole_krzyzowki {
-        width: 500px;
-        height: 500px;
-        background-color: lightgrey;
+        width: 800px;
+        height: 800px;
+        display: grid;
+        place-items: center;
+        background-color: #ccff99;
     }
 
     #kratka {
         width: 50px;
         height: 50px;
         border: solid;
-        border-color: aquamarine;
-        font-size: xx-small;
+        border-color: green;
+        color: forestgreen;
+        font-size:x-small;
     }
 
 </style>
-<div class="text-center">
+<div style="display: grid; place-items: center;" class="text-center">
     <h1 class="display-4 fw-bold">Witaj Przybyszu!</h1>
     <p>Tu będzie generator... Kiedyś</p>
     <div id="pole_krzyzowki">
-        <table width="400" height="400">
+        <table width="600" height="600">
             <tr>
                 <td id="kratka">
                     <label>@tab[0,0]</label>
@@ -232,7 +235,13 @@
                 </td>
             </tr>
         </table>
+        <div>
+            <input class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz"></input>
+        </div>
+    </div>
+    <div>
         <input class="text-black" />
-        <input class="btn btn-outline-primary" type="submit" value="Odpowiedz"></input>
+        <input class="btn btn-success" type="submit" value="Sprawdź"></input>
     </div>
 </div>

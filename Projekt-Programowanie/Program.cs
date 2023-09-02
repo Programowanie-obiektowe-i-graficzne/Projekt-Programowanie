@@ -4,15 +4,21 @@ using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
-//builder.Services.AddScoped<IWordRepository, WordRepository>();
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
 builder.Services.AddDbContext<DataContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+builder.Services.AddScoped<ICrossRepository, CrossRepository>();
+builder.Services.AddScoped<IPatternRepository, PatternRepository>();
+builder.Services.AddScoped<ITableRepository, TableRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IWordRepository, WordRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -5,6 +5,7 @@ namespace Projekt_Programowanie.Interfaces
     public interface IWordRepository
     {
         ICollection<Slowo> getSlowa();
-        Slowo GetSlowo(int dlugosc);
+        Slowo GetSlowo(int id);
+        ICollection<Slowo> GetSlowoDlugosc(int dlugosc);
     }
 }

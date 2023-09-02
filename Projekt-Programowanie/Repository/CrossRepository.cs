@@ -12,7 +12,7 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        public ICollection<Wzor> getWzory()
+        /*public ICollection<Wzor> getWzory()
         {
             throw new NotImplementedException();
         }

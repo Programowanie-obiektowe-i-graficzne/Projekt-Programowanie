@@ -4,6 +4,8 @@ namespace Projekt_Programowanie.Interfaces
 {
     public interface ITableRepository
     {
-        ICollection<TabelaWynikow> getTabela();
+        ICollection<TabelaWynikow> getTabelaWynikow();
+        TabelaWynikow GetWynik(int id);
+        ICollection<TabelaWynikow> GetWynikiUzytkownik(Uzytkownik uzytkownik);
     }
 }
