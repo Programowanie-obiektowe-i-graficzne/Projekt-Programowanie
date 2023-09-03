@@ -1,6 +1,7 @@
 ﻿using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
+using Projekt_Programowanie.Repository;
 
 namespace Projekt_Programowanie.Repository
 {
@@ -12,7 +13,7 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        /*public ICollection<Wzor> getWzory()
+        public ICollection<Wzor> getWzory()
         {
             throw new NotImplementedException();
         }
@@ -90,6 +91,60 @@ namespace Projekt_Programowanie.Repository
             return pomoc;
         }
 
+        public int znajdzPolaczenie(int dane1, int dane2)
+        {
+            int polaczenie = 0;
+            int dl1 = dlugosc(dane1);
+            int dl2 = dlugosc(dane2);
+            int x1 = wsp_x(dane1);
+            int x2 = wsp_x(dane2);
+            int y1 = wsp_y(dane1);
+            int y2 = wsp_y(dane2);
+            int kier1 = kierunek(dane1);
+            int kier2 = kierunek(dane2);
+            if(kier1 == kier2)
+            {
+                return 0;
+            }
+            int pomoc = 0;
+            for (int i = 0; i<dl1; i++)
+            {
+                for (int j = 0; j < dl2; j++)
+                {
+                    if(kier2 == 1)
+                    {
+                        x2 += 1;
+                    }
+                    else
+                    {
+                        y2 += 1;
+                    }
+                    pomoc += 1;
+                    if(x1 == x2 && y1 == y2)
+                    {
+                        polaczenie = pomoc;
+                        break;
+                    }
+                }
+                if(polaczenie == pomoc)
+                {
+                    break;
+                }
+                if(kier1 == 1)
+                {
+                    x1 += 1;
+                }
+                else
+                {
+                    y1 += 1;
+                }
+
+                pomoc += 10;
+            }
+
+            return polaczenie;
+        }
+
         public char[,] generowanie(int wzor)
         {
             Wzor jaki = getWzor(wzor);
@@ -117,10 +172,37 @@ namespace Projekt_Programowanie.Repository
             tab = wprowadz(slowo4, tab);
             tab = wprowadz(slowo5, tab);
             tab = wprowadz(slowo6, tab);
+            ICollection<Slowo> list = GetSlowoDlugosc(dlugosc(slowo1));
+            
 
-            Slowo slowo = GetSlowoDl(dlugosc(slowo1));
             
             return tab;
+        }
+
+        public ICollection<Slowo> GetSlowoDlugosc(int dlugosc)
+        {
+            return _context.Slowa.Where(p => p.Dl_Slowa == dlugosc).ToList();
+        }
+
+        public ICollection<Krzyzowka> getKrzyzowki()
+        {
+            return _context.Krzyzowki.OrderBy(p => p.ID_Krzyzowki).ToList();
+        }
+        public Krzyzowka GetKrzyzowka(int id)
+        {
+            return _context.Krzyzowki.Where(p => p.ID_Krzyzowki == id).FirstOrDefault();
+        }
+        public bool KrzyzowkaExist(int id)
+        {
+            return _context.Krzyzowki.Any(p => p.ID_Krzyzowki == id);
+        }
+        public ICollection<Krzyzowka> GetKrzyzowkiTrudnosc(int trudnosc)
+        {
+            return _context.Krzyzowki.Where(p => p.Trudnosc==trudnosc).ToList();
+        }
+        public ICollection<Krzyzowka> GetKrzyzowkiWzor(Wzor wzor)
+        {
+            return _context.Krzyzowki.Where(p => p.Wzor == wzor).ToList();
         }
     }
 }
