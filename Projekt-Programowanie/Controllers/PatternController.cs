@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Projekt_Programowanie.Interfaces;
-using Projekt_Programowanie.Models.DTO;
 using Projekt_Programowanie.Models.MODELS;
 using Projekt_Programowanie.Repository;
 
@@ -12,17 +11,16 @@ namespace Projekt_Programowanie.Controllers
     public class PatternController : Controller
     {
         private readonly IPatternRepository _patternRepository;
-        private readonly IMapper _mapper;
-        public PatternController(IPatternRepository patternRepository, IMapper mapper)
+
+        public PatternController(IPatternRepository patternRepository)
         {
             _patternRepository = patternRepository;
-            _mapper = mapper;
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Pytanie>))]
         public IActionResult GetWzory()
         {
-            var wzory = _mapper.Map<List<WzorDTO>>(_patternRepository.getWzory());
+            var wzory = _patternRepository.getWzory();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -34,7 +32,7 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetWzoryWielkosc(int patternSize)
         {
-            var wzory = _mapper.Map<List<WzorDTO>>(_patternRepository.GetWzoryWielkosc(patternSize));
+            var wzory = _patternRepository.GetWzoryWielkosc(patternSize);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

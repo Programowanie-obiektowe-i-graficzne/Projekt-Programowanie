@@ -1,5 +1,8 @@
-﻿using Projekt_Programowanie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
+using Projekt_Programowanie.Models;
 using Projekt_Programowanie.Models.MODELS;
 using Projekt_Programowanie.Repository;
 
@@ -13,17 +16,12 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        public ICollection<Wzor> getWzory()
+        public async Task<IEnumerable<Wzor>> GetWzory()
         {
-            throw new NotImplementedException();
+            return await _context.Wzory.OrderBy(p=>p.ID_Wzoru).ToListAsync();
         }
 
-        ICollection<Wzor> GetWzory()
-        {
-            return _context.Wzory.OrderBy(p => p.ID_Wzoru).ToList();
-        }
-
-        public Wzor getWzor(int id)
+        public Wzor GetWzorById(int id)
         {
             return _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefault();
         }
@@ -61,22 +59,22 @@ namespace Projekt_Programowanie.Repository
             return kier;
         }
 
-        public char[,] wprowadz(int dane, char[,] tabelka)
+        public GenerowanaKrzyzowka wprowadz(int dane, GenerowanaKrzyzowka tabelka)
         {
-            char[,] pomoc = tabelka;
+            GenerowanaKrzyzowka pomoc = tabelka;
             int dlug = dlugosc(dane);
             int wspX = wsp_x(dane);
             int wspY = wsp_y(dane);
             int kieru = kierunek(dane);
             for (int i = 0; i < dlug; i++)
             {
-                if (pomoc[wspX,wspY] == '.')
+                if (pomoc.Krzyzowka[wspX,wspY] == ".")
                 {
-                    pomoc[wspX, wspY] = ',';
+                    pomoc.Krzyzowka[wspX, wspY] = ",";
                 }
                 else
                 {
-                    pomoc[wspX, wspY] = '.';
+                    pomoc.Krzyzowka[wspX, wspY] = ".";
                 }
                 if(kieru == 1)
                 {
@@ -145,9 +143,9 @@ namespace Projekt_Programowanie.Repository
             return polaczenie;
         }
 
-        public char[,] generowanie(int wzor)
+        public GenerowanaKrzyzowka generowanie(int wzor)
         {
-            Wzor jaki = getWzor(wzor);
+            Wzor jaki = GetWzorById(wzor);
             int rozmiar = jaki.Rozmiar;
             int slowo1 = jaki.Slowo1;
             int slowo2 = jaki.Slowo2;
@@ -156,13 +154,14 @@ namespace Projekt_Programowanie.Repository
             int slowo5 = jaki.Slowo5;
             int slowo6 = jaki.Slowo6;
 
-            char[,] tab = new char[rozmiar, rozmiar];
+            GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
+            tab.Krzyzowka = new string[rozmiar, rozmiar];
 
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j< 8; j++)
                 {
-                    tab[i, j] = '?';
+                    tab.Krzyzowka[i, j] = "?";
                 }
             }
 
@@ -172,37 +171,34 @@ namespace Projekt_Programowanie.Repository
             tab = wprowadz(slowo4, tab);
             tab = wprowadz(slowo5, tab);
             tab = wprowadz(slowo6, tab);
-            ICollection<Slowo> list = GetSlowoDlugosc(dlugosc(slowo1));
+            IEnumerable<Slowo> list = GetSlowoDlugosc(dlugosc(slowo1));
             
 
             
             return tab;
         }
 
-        public ICollection<Slowo> GetSlowoDlugosc(int dlugosc)
+        public IEnumerable<Slowo> GetSlowoDlugosc(int dlugosc)
         {
             return _context.Slowa.Where(p => p.Dl_Slowa == dlugosc).ToList();
         }
-
-        public ICollection<Krzyzowka> getKrzyzowki()
+        public async Task<IEnumerable<Krzyzowka>> GetKrzyzowki()
         {
-            return _context.Krzyzowki.OrderBy(p => p.ID_Krzyzowki).ToList();
+            return await _context.Krzyzowki.OrderBy(p => p.ID_Krzyzowki).ToListAsync();
         }
-        public Krzyzowka GetKrzyzowka(int id)
+        public async Task<Krzyzowka> GetKrzyzowkaById(int id)
         {
-            return _context.Krzyzowki.Where(p => p.ID_Krzyzowki == id).FirstOrDefault();
+            return await _context.Krzyzowki.FirstOrDefaultAsync(p => p.ID_Krzyzowki==id);
         }
-        public bool KrzyzowkaExist(int id)
+        public bool Generate(Krzyzowka krzyzowka)
         {
-            return _context.Krzyzowki.Any(p => p.ID_Krzyzowki == id);
+            _context.Add(krzyzowka);
+            return Save();
         }
-        public ICollection<Krzyzowka> GetKrzyzowkiTrudnosc(int trudnosc)
+        public bool Save()
         {
-            return _context.Krzyzowki.Where(p => p.Trudnosc==trudnosc).ToList();
-        }
-        public ICollection<Krzyzowka> GetKrzyzowkiWzor(Wzor wzor)
-        {
-            return _context.Krzyzowki.Where(p => p.Wzor == wzor).ToList();
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }
