@@ -25,6 +25,11 @@ namespace Projekt_Programowanie.Repository
             return _context.Slowa.Where(p => p.Dl_Slowa==dlugosc).ToList();
         }
 
+        public Slowo GetSlowoDl(int dlugosc, int skok)
+        {
+            return _context.Slowa.Where(p => p.Dl_Slowa == dlugosc).Skip(skok).FirstOrDefault();
+        }
+
         public Slowo zwrocKolejne(ICollection<Slowo> collenction, int dlugosc)
         {
             return GetSlowo(5);
