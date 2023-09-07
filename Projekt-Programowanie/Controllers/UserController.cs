@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Projekt_Programowanie.Interfaces;
-using Projekt_Programowanie.Models.DTO;
 using Projekt_Programowanie.Models.MODELS;
 
 namespace Projekt_Programowanie.Controllers
@@ -11,17 +10,15 @@ namespace Projekt_Programowanie.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
-        public UserController(IUserRepository userRepository, IMapper mapper)
+        public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _mapper = mapper;
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Uzytkownik>))]
         public IActionResult GetUzytkownicy()
         {
-            var uzytkownicy = _mapper.Map<List<UzytkownikDTO>>(_userRepository.getUzytkownicy());
+            var uzytkownicy = _userRepository.getUzytkownicy();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -33,7 +30,7 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetUzytkownik(int userId)
         {
-            var uzytkownik = _mapper.Map<Uzytkownik>(_userRepository.GetUzytkownik(userId));
+            var uzytkownik = _userRepository.GetUzytkownik(userId);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -45,7 +42,7 @@ namespace Projekt_Programowanie.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetUzytkownik(string userName)
         {
-            var uzytkownik = _mapper.Map<Uzytkownik>(_userRepository.GetUzytkownik(userName));
+            var uzytkownik = _userRepository.GetUzytkownik(userName);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

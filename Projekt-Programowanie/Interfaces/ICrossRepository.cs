@@ -1,13 +1,17 @@
-﻿using Projekt_Programowanie.Models.MODELS;
+﻿using Microsoft.AspNetCore.Mvc;
+using Projekt_Programowanie.Models;
+using Projekt_Programowanie.Models.MODELS;
 
 namespace Projekt_Programowanie.Interfaces
 {
     public interface ICrossRepository
     {
-        ICollection<Krzyzowka> getKrzyzowki();
-        Krzyzowka GetKrzyzowka(int id);
-        bool KrzyzowkaExist(int id);
-        ICollection<Krzyzowka> GetKrzyzowkiTrudnosc(int trudnosc);
-        ICollection<Krzyzowka> GetKrzyzowkiWzor(Wzor wzor);
+        public Task<IEnumerable<Krzyzowka>> GetKrzyzowki();
+        public Task<Krzyzowka> GetKrzyzowkaById(int id);
+        public Task<IEnumerable<Wzor>> GetWzory();
+        public Wzor GetWzorById(int id);
+        public GenerowanaKrzyzowka generowanie(int wzor);
+        bool Generate(Krzyzowka krzyzowka);
+        bool Save();
     }
 }

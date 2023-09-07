@@ -25,10 +25,11 @@ namespace Projekt_Programowanie.Controllers
         {
             return View();
         }
-        public IActionResult Generator()
+        public IActionResult Generator1()
         {
             return View();
         }
+
         public IActionResult Autorzy()
         {
             return View();

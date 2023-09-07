@@ -1,0 +1,51 @@
+﻿@using Projekt_Programowanie.Models
+@{
+    ViewData["Title"] = "Generator";
+}
+@model GenerowanaKrzyzowka
+<style>
+    #pole_krzyzowki {
+        width: 800px;
+        height: 800px;
+        display: grid;
+        place-items: center;
+        background-color: #ccff99;
+    }
+
+    #kratka {
+        width: 50px;
+        height: 50px;
+        border: solid;
+        border-color: green;
+        color: forestgreen;
+        font-size: x-small;
+    }
+
+</style>
+<div style="display: grid; place-items: center;" class="text-center">
+    <h1 class="display-4 fw-bold">Witaj Przybyszu!</h1>
+    <p>Tu będzie generator... Kiedyś</p>
+    <div id="pole_krzyzowki">
+        <table width="600" height="600">
+            @for (int row = 0; row < Model.Krzyzowka.GetLength(0); row++)
+            {
+                <tr>
+                    @for (int col = 0; col < Model.Krzyzowka.GetLength(1); col++)
+                    {
+                        <td id="kratka">
+                            @Model.Krzyzowka[row, col]
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+        <div>
+            <input class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz" />
+        </div>
+    </div>
+    <div>
+        <input class="text-black" />
+        <input class="btn btn-success" type="submit" value="Sprawdź" />
+    </div>
+</div>
