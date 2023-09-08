@@ -26,6 +26,15 @@ namespace Projekt_Programowanie.Repository
             return _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefault();
         }
 
+        public Pytanie GetPytanieOdpowiedzTrud(Slowo slowo, int trud)
+        {
+            return _context.Pytania.Where(p => p.Odpowiedz == slowo && p.Trudnosc == trud).FirstOrDefault();
+        }
+
+        public Slowo GetSlowoNaz(string nazwa)
+        {
+            return _context.Slowa.Where(p => p.NazwaSlowa == nazwa).FirstOrDefault();
+        }
         public int dlugosc(int dane)
         {
             int dl = dane % 10;
@@ -88,17 +97,26 @@ namespace Projekt_Programowanie.Repository
 
             return pomoc;
         }
-        public char[,] wprowadz(int dane, char[,] tabelka, string slowo)
+        public string[,] wprowadz(int dane, string[,] tabelka, string slowo, string pytanie)
         {
-            char[,] pomoc = tabelka;
+            string[,] pomoc = tabelka;
             int dlug = dlugosc(dane);
             int wspX = wsp_x(dane);
             int wspY = wsp_y(dane);
             int kieru = kierunek(dane);
             int pom = 0;
-            for (int i = 0; i < dlug; i++)
+            pomoc[wspX, wspY] = pytanie;
+            if (kieru == 1)
             {
-                pomoc[wspX, wspY] = slowo[pom];
+                wspX += 1;
+            }
+            else
+            {
+                wspY += 1;
+            }
+            for (int i = 1; i < dlug; i++)
+            {
+                pomoc[wspX, wspY] = slowo[pom].ToString();
                 pom += 1;
                 if (kieru == 1)
                 {
@@ -128,7 +146,7 @@ namespace Projekt_Programowanie.Repository
             {
                 return 0;
             }
-            int pomoc = 0;
+            int pomoc = -11;
             for (int i = 0; i<dl1; i++)
             {
                 for (int j = 0; j < dl2; j++)
@@ -183,18 +201,18 @@ namespace Projekt_Programowanie.Repository
 
             for (int i = 0; i < 8; i++)
             {
-                for (int j = 0; j< 8; j++)
+                for (int j = 0; j < 8; j++)
                 {
                     tab.Krzyzowka[i, j] = "?";
                 }
             }
 
-           /* tab = wprowadz(slowo1, tab);
-            tab = wprowadz(slowo2, tab);
-            tab = wprowadz(slowo3, tab);
-            tab = wprowadz(slowo4, tab);
-            tab = wprowadz(slowo5, tab);
-            tab = wprowadz(slowo6, tab); */
+            /* tab = wprowadz(slowo1, tab);
+             tab = wprowadz(slowo2, tab);
+             tab = wprowadz(slowo3, tab);
+             tab = wprowadz(slowo4, tab);
+             tab = wprowadz(slowo5, tab);
+             tab = wprowadz(slowo6, tab); */
 
             ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1));
             ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2));
@@ -203,13 +221,13 @@ namespace Projekt_Programowanie.Repository
             ICollection<Slowo> list5 = GetSlowoDlugosc(dlugosc(slowo5));
             ICollection<Slowo> list6 = GetSlowoDlugosc(dlugosc(slowo6));
 
-            Random ran = new Random(); 
+            Random ran = new Random();
             int r1 = ran.Next();
             int r2 = ran.Next();
             int r3 = ran.Next();
             string ss1 = "aaaaaa", ss2 = "aaaaaa", ss3 = "aaaaaa", ss4 = "aaaaaa", ss5 = "aaaaaa", ss6 = "aaaaaa";
             bool czy = false;
-            for (int i = 0; i< list1.Count(); i++) //szukanie slowa 1
+            for (int i = 0; i < list1.Count(); i++) //szukanie slowa 1
             {
                 ss1 = znajdzSlowo(list1, 0, 0, 0, 0, 0, "", "", "", "", "", (r1 + i) % list1.Count());
                 if (ss1 == "Nic")
@@ -219,9 +237,9 @@ namespace Projekt_Programowanie.Repository
                     ss2 = znajdzSlowo(list2, znajdzPolaczenie(slowo1, slowo2), 0, 0, 0, 0, ss1, "", "", "", "", (r2 + j) % list2.Count());
                     if (ss2 == "Nic")
                         continue;
-                    for(int q = 0; q < list3.Count(); q++) //szukanie slowa 3
+                    for (int q = 0; q < list3.Count(); q++) //szukanie slowa 3
                     {
-                       ss3 = znajdzSlowo(list3, znajdzPolaczenie(slowo1, slowo3), znajdzPolaczenie(slowo2, slowo3), 0, 0, 0, ss1, ss2, "", "", "", (r3 + q) % list3.Count());
+                        ss3 = znajdzSlowo(list3, znajdzPolaczenie(slowo1, slowo3), znajdzPolaczenie(slowo2, slowo3), 0, 0, 0, ss1, ss2, "", "", "", (r3 + q) % list3.Count());
                         if (ss3 == "Nic")
                             continue;
                         for (int w = 0; w < list4.Count(); w++) //szukanie slowa 4
@@ -260,15 +278,47 @@ namespace Projekt_Programowanie.Repository
                     break;
             }
 
-            tab = wprowadz(slowo1, tab, ss1);
-            tab = wprowadz(slowo2, tab, ss2);
-            tab = wprowadz(slowo3, tab, ss3);
-            tab = wprowadz(slowo4, tab, ss4);
-            tab = wprowadz(slowo5, tab, ss5);
-            tab = wprowadz(slowo6, tab, ss6);
+            Slowo s1 = GetSlowoNaz(ss1);
+            Slowo s2 = GetSlowoNaz(ss2);
+            Slowo s3 = GetSlowoNaz(ss3);
+            Slowo s4 = GetSlowoNaz(ss4);
+            Slowo s5 = GetSlowoNaz(ss5);
+            Slowo s6 = GetSlowoNaz(ss6);
 
-            return tab;
+            Pytanie p1 = null;
+            Pytanie p2 = null;
+            Pytanie p3 = null;
+            Pytanie p4 = null;
+            Pytanie p5 = null;
+            Pytanie p6 = null;
+
+            r1 = (r1 % 3);
+            for (int i = 3; i < 3; i++)
+            {
+                if (p1 == null)
+                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 3); 
+                if (p2 == null)
+                    p2 = GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 3);
+                if (p3 == null)
+                    p3 = GetPytanieOdpowiedzTrud(s3, (r1 + i + 2) % 3);
+                if (p4 == null)
+                    p4 = GetPytanieOdpowiedzTrud(s4, (r1 + 1 + i) % 3);
+                if (p5 == null)
+                    p5 = GetPytanieOdpowiedzTrud(s5, (r1 + i) % 3);
+                if (p6 == null)
+                    p6 = GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 3);
+            }
+
+            tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
+            tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
+            tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
+            tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
+            tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
+            tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
+
+        return tab;
         }
+        
 
         public String znajdzSlowo(ICollection<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
         {

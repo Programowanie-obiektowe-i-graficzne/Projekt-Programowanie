@@ -5,7 +5,7 @@
         public string[,] Krzyzowka { get; set; }
         public GenerowanaKrzyzowka()
         {
-            Krzyzowka = new string[8, 8];
+            Krzyzowka = new string[9, 9];
         }
     }
 }
