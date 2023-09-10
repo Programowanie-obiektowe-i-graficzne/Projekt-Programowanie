@@ -6,8 +6,6 @@ using Projekt_Programowanie.Models.MODELS;
 
 namespace Projekt_Programowanie.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
-    [ApiController]
     public class WordController : Controller
     {
         private readonly IWordRepository _wordRepository;
@@ -15,40 +13,21 @@ namespace Projekt_Programowanie.Controllers
         {
             _wordRepository = wordRepository;
         }
-        [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Slowo>))]
-        public IActionResult GetSlowa()
+        public async Task<IActionResult> GetSlowa()
         {
-            var slowa = _wordRepository.getSlowa();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(slowa);
+            var slowa =await _wordRepository.GetSlowa();
+            return View(slowa);
+            
         }
-        [HttpGet("{wordId}")]
-        [ProducesResponseType(200, Type = typeof(Slowo))]
-        [ProducesResponseType(400)]
-        public IActionResult GetSlowo(int wordId)
+        public async Task<IActionResult> GetSlowo(int wordId)
         {
-            var slowo = _wordRepository.GetSlowo(wordId);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(slowo);
+            var slowo = await _wordRepository.GetSlowo(wordId);
+            return View(slowo);
         }
-        [HttpGet("{wordLength}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Slowo>))]
-        [ProducesResponseType(400)]
-        public IActionResult GetSlowoDlugosc(int wordLength)
+        public async Task<IActionResult> GetSlowoDlugosc(int wordLength)
         {
-            var slowa = _wordRepository.GetSlowoDlugosc(wordLength);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(slowa);
+            var slowa = await _wordRepository.GetSlowoDlugosc(wordLength);
+            return View(slowa);
         }
     }
 }

@@ -293,7 +293,7 @@ namespace Projekt_Programowanie.Repository
             Pytanie p6 = null;
 
             r1 = (r1 % 3);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 if (p1 == null)
                     p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4); 
