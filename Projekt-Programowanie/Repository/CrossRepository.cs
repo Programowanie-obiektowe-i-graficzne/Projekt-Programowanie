@@ -214,12 +214,12 @@ namespace Projekt_Programowanie.Repository
              tab = wprowadz(slowo5, tab);
              tab = wprowadz(slowo6, tab); */
 
-            ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1));
-            ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2));
-            ICollection<Slowo> list3 = GetSlowoDlugosc(dlugosc(slowo3));
-            ICollection<Slowo> list4 = GetSlowoDlugosc(dlugosc(slowo4));
-            ICollection<Slowo> list5 = GetSlowoDlugosc(dlugosc(slowo5));
-            ICollection<Slowo> list6 = GetSlowoDlugosc(dlugosc(slowo6));
+            ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1) -1);
+            ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2) -1);
+            ICollection<Slowo> list3 = GetSlowoDlugosc(dlugosc(slowo3) -1);
+            ICollection<Slowo> list4 = GetSlowoDlugosc(dlugosc(slowo4) -1);
+            ICollection<Slowo> list5 = GetSlowoDlugosc(dlugosc(slowo5) -1);
+            ICollection<Slowo> list6 = GetSlowoDlugosc(dlugosc(slowo6) -1);
 
             Random ran = new Random();
             int r1 = ran.Next();
@@ -293,20 +293,20 @@ namespace Projekt_Programowanie.Repository
             Pytanie p6 = null;
 
             r1 = (r1 % 3);
-            for (int i = 3; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (p1 == null)
-                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 3); 
+                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4); 
                 if (p2 == null)
-                    p2 = GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 3);
+                    p2 = GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 4);
                 if (p3 == null)
-                    p3 = GetPytanieOdpowiedzTrud(s3, (r1 + i + 2) % 3);
+                    p3 = GetPytanieOdpowiedzTrud(s3, (r1 + i + 2) % 4);
                 if (p4 == null)
-                    p4 = GetPytanieOdpowiedzTrud(s4, (r1 + 1 + i) % 3);
+                    p4 = GetPytanieOdpowiedzTrud(s4, (r1 + 1 + i) % 4);
                 if (p5 == null)
-                    p5 = GetPytanieOdpowiedzTrud(s5, (r1 + i) % 3);
+                    p5 = GetPytanieOdpowiedzTrud(s5, (r1 + i) % 4);
                 if (p6 == null)
-                    p6 = GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 3);
+                    p6 = GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 4);
             }
 
             tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
