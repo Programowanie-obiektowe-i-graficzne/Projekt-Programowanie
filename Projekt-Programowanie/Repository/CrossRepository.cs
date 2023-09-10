@@ -214,12 +214,12 @@ namespace Projekt_Programowanie.Repository
              tab = wprowadz(slowo5, tab);
              tab = wprowadz(slowo6, tab); */
 
-            ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1));
-            ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2));
-            ICollection<Slowo> list3 = GetSlowoDlugosc(dlugosc(slowo3));
-            ICollection<Slowo> list4 = GetSlowoDlugosc(dlugosc(slowo4));
-            ICollection<Slowo> list5 = GetSlowoDlugosc(dlugosc(slowo5));
-            ICollection<Slowo> list6 = GetSlowoDlugosc(dlugosc(slowo6));
+            ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1) -1);
+            ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2) -1);
+            ICollection<Slowo> list3 = GetSlowoDlugosc(dlugosc(slowo3) -1);
+            ICollection<Slowo> list4 = GetSlowoDlugosc(dlugosc(slowo4) -1);
+            ICollection<Slowo> list5 = GetSlowoDlugosc(dlugosc(slowo5) -1);
+            ICollection<Slowo> list6 = GetSlowoDlugosc(dlugosc(slowo6) -1);
 
             Random ran = new Random();
             int r1 = ran.Next();
