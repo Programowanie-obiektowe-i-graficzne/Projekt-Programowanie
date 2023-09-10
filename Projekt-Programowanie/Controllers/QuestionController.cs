@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
+using System.Collections.Generic;
 
 namespace Projekt_Programowanie.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
-    [ApiController]
     public class QuestionController : Controller
     {
         private readonly IQuestionRepository _questionRepository;
@@ -15,41 +14,24 @@ namespace Projekt_Programowanie.Controllers
         {
             _questionRepository = questionRepository;
         }
-        [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Pytanie>))]
-        public IActionResult GetPytania()
+        public async Task<IActionResult> GetPytania()
         {
-            var pytania = _questionRepository.getPytania();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(pytania);
+            IEnumerable<Pytanie> questions = await _questionRepository.GetPytania();
+            return View(questions);
         }
-        [HttpGet("{questionDifficulty}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Pytanie>))]
-        [ProducesResponseType(400)]
-        public IActionResult GetPytaniaTrudnosc(int questionDifficulty)
+        public async Task<IActionResult> GetPytaniaTrudnosc(int questionDifficulty)
         {
-            var pytania = _questionRepository.GetPytaniaTrudnosc(questionDifficulty);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(pytania);
+            IEnumerable<Pytanie> questions = await _questionRepository.GetPytaniaTrudnosc(questionDifficulty);
+            return View(questions);
         }
-        [HttpGet("{questionAnswer}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Pytanie>))]
-        [ProducesResponseType(400)]
-        public IActionResult GetPytaniaOdpowiedz(Slowo questionAnswer)
+        public async Task<IActionResult> GetPytaniaOdpowiedz(Slowo questionAnswer)
         {
-            var pytania = _questionRepository.GetPytaniaOdpowiedz(questionAnswer);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(pytania);
+            IEnumerable<Pytanie> questions = await _questionRepository.GetPytaniaOdpowiedz(questionAnswer);
+            return View(questions);
         }
-
+        public async Task<IActionResult> DodajPytanie(Slowo question)
+        {
+            return View();
+        }
     }
 }
