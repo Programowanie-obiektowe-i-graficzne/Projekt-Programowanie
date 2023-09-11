@@ -41,7 +41,7 @@ namespace Projekt_Programowanie.Repository
             return dl;
         }
 
-        public int wsp_y(int dane)
+        public int wsp_x(int dane)
         {
             int y = dane % 1000;
             y -= dlugosc(dane);
@@ -49,11 +49,11 @@ namespace Projekt_Programowanie.Repository
             return y;
         }
 
-        public int wsp_x(int dane)
+        public int wsp_y(int dane)
         {
             int x = dane % 100000;
             x -= dlugosc(dane);
-            x-= (wsp_y(dane)*10);
+            x-= (wsp_x(dane)*10);
             x /= 1000;
             return x;
         }
@@ -106,7 +106,7 @@ namespace Projekt_Programowanie.Repository
             int kieru = kierunek(dane);
             int pom = 0;
             pomoc[wspX, wspY] = pytanie;
-            if (kieru == 1)
+            if (kieru == 2)
             {
                 wspX += 1;
             }
@@ -118,7 +118,7 @@ namespace Projekt_Programowanie.Repository
             {
                 pomoc[wspX, wspY] = slowo[pom].ToString();
                 pom += 1;
-                if (kieru == 1)
+                if (kieru == 2)
                 {
                     wspX += 1;
                 }
@@ -151,7 +151,7 @@ namespace Projekt_Programowanie.Repository
             {
                 for (int j = 0; j < dl2; j++)
                 {
-                    if(kier2 == 1)
+                    if(kier2 == 2)
                     {
                         x2 += 1;
                     }
@@ -170,7 +170,7 @@ namespace Projekt_Programowanie.Repository
                 {
                     break;
                 }
-                if(kier1 == 1)
+                if(kier1 == 2)
                 {
                     x1 += 1;
                 }
@@ -199,20 +199,13 @@ namespace Projekt_Programowanie.Repository
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
             tab.Krzyzowka = new string[rozmiar, rozmiar];
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < jaki.Rozmiar; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < jaki.Rozmiar; j++)
                 {
                     tab.Krzyzowka[i, j] = "?";
                 }
             }
-
-            /* tab = wprowadz(slowo1, tab);
-             tab = wprowadz(slowo2, tab);
-             tab = wprowadz(slowo3, tab);
-             tab = wprowadz(slowo4, tab);
-             tab = wprowadz(slowo5, tab);
-             tab = wprowadz(slowo6, tab); */
 
             ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1) -1);
             ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2) -1);
