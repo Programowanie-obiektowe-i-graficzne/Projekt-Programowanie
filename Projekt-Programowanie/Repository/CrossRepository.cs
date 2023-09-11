@@ -41,19 +41,16 @@ namespace Projekt_Programowanie.Repository
             return dl;
         }
 
-        public int wsp_y(int dane)
+        public int wsp_col(int dane)
         {
             int y = dane % 1000;
-            y -= dlugosc(dane);
             y /= 10;
             return y;
         }
 
-        public int wsp_x(int dane)
+        public int wsp_line(int dane)
         {
             int x = dane % 100000;
-            x -= dlugosc(dane);
-            x-= (wsp_y(dane)*10);
             x /= 1000;
             return x;
         }
@@ -61,9 +58,6 @@ namespace Projekt_Programowanie.Repository
         public int kierunek(int dane)
         {
             int kier = dane;
-            kier -= dlugosc(dane);
-            kier -= (wsp_x(dane) * 1000);
-            kier-= (wsp_y(dane) * 10);
             kier /= 100000;
             return kier;
         }
@@ -72,20 +66,20 @@ namespace Projekt_Programowanie.Repository
         {
             GenerowanaKrzyzowka pomoc = tabelka;
             int dlug = dlugosc(dane);
-            int wspX = wsp_x(dane);
-            int wspY = wsp_y(dane);
+            int wspY = wsp_line(dane);
+            int wspX = wsp_col(dane);
             int kieru = kierunek(dane);
             for (int i = 0; i < dlug; i++)
             {
-                if (pomoc.Krzyzowka[wspX,wspY] == ".")
+                if (pomoc.Krzyzowka[wspY,wspX] == ".")
                 {
-                    pomoc.Krzyzowka[wspX, wspY] = ",";
+                    pomoc.Krzyzowka[wspY, wspX] = ",";
                 }
                 else
                 {
-                    pomoc.Krzyzowka[wspX, wspY] = ".";
+                    pomoc.Krzyzowka[wspY, wspX] = ".";
                 }
-                if(kieru == 1)
+                if(kieru == 1)//prawo
                 {
                     wspX += 1;
                 }
@@ -101,12 +95,12 @@ namespace Projekt_Programowanie.Repository
         {
             string[,] pomoc = tabelka;
             int dlug = dlugosc(dane);
-            int wspX = wsp_x(dane);
-            int wspY = wsp_y(dane);
+            int wspY = wsp_line(dane);
+            int wspX = wsp_col(dane);
             int kieru = kierunek(dane);
             int pom = 0;
-            pomoc[wspX, wspY] = pytanie;
-            if (kieru == 1)
+            pomoc[wspY, wspX] = pytanie;
+            if (kieru == 1) //prawo
             {
                 wspX += 1;
             }
@@ -116,7 +110,7 @@ namespace Projekt_Programowanie.Repository
             }
             for (int i = 1; i < dlug; i++)
             {
-                pomoc[wspX, wspY] = slowo[pom].ToString();
+                pomoc[wspY, wspX] = slowo[pom].ToString();
                 pom += 1;
                 if (kieru == 1)
                 {
@@ -136,10 +130,10 @@ namespace Projekt_Programowanie.Repository
             int polaczenie = 0;
             int dl1 = dlugosc(dane1);
             int dl2 = dlugosc(dane2);
-            int x1 = wsp_x(dane1);
-            int x2 = wsp_x(dane2);
-            int y1 = wsp_y(dane1);
-            int y2 = wsp_y(dane2);
+            int y1 = wsp_line(dane1);
+            int y2 = wsp_line(dane2);
+            int x1 = wsp_col(dane1);
+            int x2 = wsp_col(dane2);
             int kier1 = kierunek(dane1);
             int kier2 = kierunek(dane2);
             if(kier1 == kier2)
@@ -147,9 +141,9 @@ namespace Projekt_Programowanie.Repository
                 return 0;
             }
             int pomoc = -11;
-            for (int i = 0; i<dl1; i++)
+            for (int i = 0; i < dl1 - 1; i++)
             {
-                for (int j = 0; j < dl2; j++)
+                for (int j = 0; j < dl2 - 1; j++)
                 {
                     if(kier2 == 1)
                     {
@@ -178,8 +172,10 @@ namespace Projekt_Programowanie.Repository
                 {
                     y1 += 1;
                 }
-                pomoc -= dl2;
+                pomoc -= (pomoc % 10);
                 pomoc += 10;
+                x2 = wsp_col(dane2);
+                y2 = wsp_line(dane2);
             }
 
             return polaczenie;
