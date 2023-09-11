@@ -102,11 +102,11 @@ namespace Projekt_Programowanie.Repository
             pomoc[wspY, wspX] = pytanie;
             if (kieru == 1) //prawo
             {
-                wspX += 1;
+                wspY += 1;
             }
             else
             {
-                wspY += 1;
+                wspX += 1;
             }
             for (int i = 1; i < dlug; i++)
             {
