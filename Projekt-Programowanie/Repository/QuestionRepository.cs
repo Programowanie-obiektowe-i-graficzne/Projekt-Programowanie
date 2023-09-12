@@ -1,4 +1,5 @@
-﻿using Projekt_Programowanie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
 
@@ -11,29 +12,53 @@ namespace Projekt_Programowanie.Repository
         {
             _context = context;
         }
-
-        public ICollection<Pytanie> getPytania()
+        public async Task<IEnumerable<Pytanie>> GetPytania()
         {
-            return _context.Pytania.OrderBy(p => p.ID_Pytania).ToList();
+            return await _context.Pytania.OrderBy(p => p.ID_Pytania).ToListAsync();
         }
 
-        public Pytanie GetPytanie(int id)
+        public async Task<Pytanie> GetPytanie(int id)
         {
-            return _context.Pytania.Where(p => p.ID_Pytania == id).FirstOrDefault();
-        }
-        public Pytanie GetPytanie(string pytanie)
-        {
-            return _context.Pytania.Where(p => p.Tresc == pytanie).FirstOrDefault();
+            return await _context.Pytania.Where(p => p.ID_Pytania == id).FirstOrDefaultAsync();
         }
 
-        public ICollection<Pytanie> GetPytaniaTrudnosc(int trudnosc)
+        public async Task<Pytanie> GetPytanie(string pytanie)
         {
-            return _context.Pytania.Where(p => p.Trudnosc == trudnosc).ToList();
+            return await _context.Pytania.Where(p => p.Tresc == pytanie).FirstOrDefaultAsync();
         }
 
-        public ICollection<Pytanie> GetPytaniaOdpowiedz(Slowo odpowiedz)
+        public async Task<IEnumerable<Pytanie>> GetPytaniaTrudnosc(int trudnosc)
         {
-            return _context.Pytania.Where(p => p.Odpowiedz == odpowiedz).ToList();
+            return await _context.Pytania.Where(p => p.Trudnosc == trudnosc).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Pytanie>> GetPytaniaOdpowiedz(Slowo odpowiedz)
+        {
+            return await _context.Pytania.Where(p => p.Odpowiedz == odpowiedz).ToListAsync();
+        }
+
+        public bool Add(Pytanie pytanie)
+        {
+            _context.Add(pytanie);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
+
+        public bool Delete(Pytanie pytanie)
+        {
+            _context.Remove(pytanie);
+            return Save();
+        }
+
+        public bool Update(Pytanie pytanie)
+        {
+            _context.Update(pytanie);
+            return Save();
         }
     }
 }

@@ -1,0 +1,43 @@
+﻿@using Projekt_Programowanie.Models.MODELS
+@model Slowo
+@{
+    ViewData["Title"] = "Dodaj pytanie";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Dodaj Slowo</h4>
+        </p>
+        <div class="form-group">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Dodaj pytanie">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="NazwaSlowa" class="control-label"></label>
+                        <input asp-for="NazwaSlowa" class="form-control" />
+                        <span asp-validation-for="NazwaSlowa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Kategoria" class="control-label"></label>
+                        <input asp-for="Kategoria" class="form-control" />
+                        <span asp-validation-for="Kategoria" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Pytania" class="control-label"></label>
+                        <select asp-for="Pytania" class="form-select"/>
+                        @foreach(var item in Model.Pytania){
+                            <option value="@item.Tresc">@item.Tresc</option>
+                        }
+                        <span asp-validation-for="Pytania" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3 mb-5">
+                        <input class="btn btn-outline-success float-right" type="submit" asp-controller="Home" asp-action="Dodaj" />
+                        <a class="btn btn-outline-secondary" asp-controller="Cross" asp-action="Cross">Anuluj</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

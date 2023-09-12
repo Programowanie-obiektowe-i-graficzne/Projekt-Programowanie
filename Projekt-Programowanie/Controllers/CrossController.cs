@@ -23,16 +23,15 @@ namespace Projekt_Programowanie.Controllers
         {
             return View();
         }
-        [HttpPost]
         public async Task<IActionResult> Generate(Krzyzowka krzyzowka)
         {
-            var tab = _crossRepository.generowanie(1);
+            var tab = _crossRepository.generowanie(2);
             _crossRepository.Generate(krzyzowka);
             return View(tab);
         }
         public async Task<IActionResult> Generator()
         {
-            var tab = _crossRepository.generowanie(1);
+            var tab = _crossRepository.generowanie(2);
             return View(tab);
         }
     }

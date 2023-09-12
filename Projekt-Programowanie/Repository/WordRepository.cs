@@ -1,4 +1,5 @@
-﻿using Projekt_Programowanie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
 
@@ -12,22 +13,57 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        public ICollection<Slowo> getSlowa()
+        public async Task<Slowo> GetSlowoNaz(string nazwa)
         {
-            return _context.Slowa.OrderBy(p => p.ID_Slowa).ToList();
+            return await _context.Slowa.Where(p => p.NazwaSlowa == nazwa).FirstOrDefaultAsync();
         }
-        public Slowo GetSlowo(int id)
+        public async Task<Slowo> GetSlowoDl(int dlugosc, int skok)
         {
-            return _context.Slowa.Where(p => p.ID_Slowa == id).FirstOrDefault();
-        }
-        public ICollection<Slowo> GetSlowoDlugosc(int dlugosc)
-        {
-            return _context.Slowa.Where(p => p.Dl_Slowa==dlugosc).ToList();
+            return await _context.Slowa.Where(p => p.Dl_Slowa == dlugosc).Skip(skok).FirstOrDefaultAsync();
         }
 
-        public Slowo zwrocKolejne(ICollection<Slowo> collenction, int dlugosc)
+        public async Task<Slowo> zwrocKolejne(IEnumerable<Slowo> collenction, int dlugosc)
         {
-            return GetSlowo(5);
+            return await GetSlowo(5);
+        }
+
+        public async Task<IEnumerable<Slowo>> GetSlowa()
+        {
+            return await _context.Slowa.OrderBy(p => p.ID_Slowa).ToListAsync();
+        }
+
+        public async Task<Slowo> GetSlowo(int id)
+        {
+            return await _context.Slowa.Where(p => p.ID_Slowa == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Slowo>> GetSlowoDlugosc(int dlugosc)
+        {
+            return await _context.Slowa.Where(p => p.Dl_Slowa == dlugosc).ToListAsync();
+        }
+
+        public bool Add(Slowo slowo)
+        {
+            _context.Add(slowo);
+            return Save();
+        }
+
+        public bool Delete(Slowo slowo)
+        {
+            _context.Remove(slowo);
+            return Save();
+        }
+
+        public bool Update(Slowo slowo)
+        {
+            _context.Update(slowo);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }
