@@ -1,0 +1,24 @@
+﻿@using Projekt_Programowanie.Models.MODELS
+@{
+    ViewData["Title"] = "Wyświetl listy:";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Listy z bazy:</h4>
+        </p>
+        <div class="form-group">
+            <div class="col-md-8 offset-2">
+                <a style="color:forestgreen; font-family:'Baskerville Old Face'" class="nav-link" asp-area="" asp-controller="Word" asp-action="Word">Lista Słów</a>
+            </div>
+            <div class="col-md-8 offset-2">
+                <a style="color:forestgreen; font-family:'Baskerville Old Face'" class="nav-link" asp-area="" asp-controller="Question" asp-action="Question">Lista Pytań</a>
+            </div>
+            <div class="col-md-8 offset-2">
+                <a style="color:forestgreen; font-family:'Baskerville Old Face'" class="nav-link" asp-area="" asp-controller="Cross" asp-action="Cross">Lista Krzyżówek</a>
+            </div>
+        </div>
+    </div>
+</div>
+

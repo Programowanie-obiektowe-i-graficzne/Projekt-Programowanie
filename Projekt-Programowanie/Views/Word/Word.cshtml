@@ -1,0 +1,19 @@
+﻿@using Projekt_Programowanie.Models.MODELS
+@model IEnumerable<Slowo>
+@{
+    ViewData["Title"] = "Dodaj pytanie lub odpowiedź";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Lista Słów</h4>
+        </p>
+        <div class="form-group">
+            @foreach (var item in Model)
+            {
+                <div class="text-muted">@item.NazwaSlowa</div>
+            }
+        </div>
+    </div>
+</div>
