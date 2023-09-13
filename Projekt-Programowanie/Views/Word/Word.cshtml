@@ -7,12 +7,12 @@
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>Lista Słów</h4>
+            <h4 style="font-size:xx-large">Lista Słów:</h4>
         </p>
         <div class="form-group">
             @foreach (var item in Model)
             {
-                <div class="text-muted">@item.NazwaSlowa</div>
+                <div style="color:forestgreen; font-size:x-large" class="text">@item.NazwaSlowa</div>
             }
         </div>
     </div>

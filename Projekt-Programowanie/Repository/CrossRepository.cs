@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models;
@@ -282,7 +284,7 @@ namespace Projekt_Programowanie.Repository
             Pytanie p6 = null;
 
             r1 = (r1 % 3);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (p1 == null)
                     p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4);
@@ -297,21 +299,26 @@ namespace Projekt_Programowanie.Repository
                 if (p6 == null)
                     p6 = GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 4);
             }
-
-            tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
-            tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
-            tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
-            tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
-            tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
-            tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
-
-        return tab;
+            if(p1 != null && p2 != null && p3 != null && p4 != null && p5 != null && p6 != null)
+            {
+                tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
+                tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
+                tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
+                tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
+                tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
+                tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
+            }
+            else
+            {
+                Console.WriteLine("", "Wystąpił błąd generowania");
+                return new GenerowanaKrzyzowka();
+            }
+            return tab;
         }
         
 
         public String znajdzSlowo(ICollection<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
         {
-            String wyraz;
             Slowo slow;
             int ile = lista.Count();
             if(polocz1 == 0)
