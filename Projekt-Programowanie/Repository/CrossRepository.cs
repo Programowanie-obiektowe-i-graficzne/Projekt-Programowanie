@@ -285,7 +285,7 @@ namespace Projekt_Programowanie.Repository
             for (int i = 0; i < 5; i++)
             {
                 if (p1 == null)
-                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4); 
+                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4);
                 if (p2 == null)
                     p2 = GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 4);
                 if (p3 == null)
