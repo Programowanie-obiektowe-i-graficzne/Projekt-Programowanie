@@ -59,5 +59,52 @@ namespace Projekt_Programowanie.Controllers
             IEnumerable<Pytanie> questions = await _questionRepository.GetPytania();
             return View(questions);
         }
+        [HttpGet("Question/Edytuj/{id}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var slowa = _context.Slowa.ToList();
+            ViewData["Slowa"] = slowa;
+            var pytanie = await _questionRepository.GetPytanie(id);
+            if (pytanie == null)
+            {
+                return NotFound(); // Jeśli słowo nie istnieje, zwróć NotFound
+            }
+
+            return View(pytanie);
+        }
+
+        [HttpPost("Question/PotwierdzEdytuj")]
+        public async Task<IActionResult> PotwierdzEdytuj(Pytanie pytanie)
+        {
+            ViewData["Slowa"] = _context.Slowa.ToList();
+            _questionRepository.Update(pytanie);
+            return RedirectToAction("Question");
+        }
+        public async Task<IActionResult> Usun(int id)
+        {
+            var pytanie = await _questionRepository.GetPytanie(id);
+
+            if (pytanie == null)
+            {
+                return NotFound(); // Jeśli słowo nie istnieje, zwróć NotFound
+            }
+
+            return View(pytanie);
+        }
+
+        [HttpPost("Question/PotwierdzUsuniecie")]
+        public IActionResult PotwierdzUsuniecie(int id)
+        {
+            var success = _questionRepository.Delete(id);
+
+            if (success)
+            {
+                return RedirectToAction("Question"); // Przekieruj na listę słów lub inną stronę
+            }
+            else
+            {
+                return NotFound(); // W razie problemów, np. braku słowa do usunięcia
+            }
+        }
     }
 }

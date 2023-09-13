@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
+using Projekt_Programowanie.Repository;
 
 namespace Projekt_Programowanie.Controllers
 {
@@ -51,6 +52,52 @@ namespace Projekt_Programowanie.Controllers
         public IActionResult DodajSlowo()
         {
             return View();
+        }
+        [HttpGet("Word/Edytuj/{id}")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var slowo = await _wordRepository.GetSlowo(id);
+
+            if (slowo == null)
+            {
+                return NotFound(); // Jeśli słowo nie istnieje, zwróć NotFound
+            }
+
+            return View(slowo);
+        }
+
+        [HttpPost("Word/PotwierdzEdytuj")]
+        public async Task<IActionResult> PotwierdzEdytuj(Slowo slowo)
+        {
+
+            _wordRepository.Update(slowo);
+            return RedirectToAction("Word");
+        }
+        public async Task<IActionResult> Usun(int id)
+        {
+            var slowo = await _wordRepository.GetSlowo(id);
+
+            if (slowo == null)
+            {
+                return NotFound(); // Jeśli słowo nie istnieje, zwróć NotFound
+            }
+
+            return View(slowo);
+        }
+
+        [HttpPost("Word/PotwierdzUsuniecie")]
+        public IActionResult PotwierdzUsuniecie(int id)
+        {
+            var success = _wordRepository.Delete(id);
+
+            if (success)
+            {
+                return RedirectToAction("Word"); // Przekieruj na listę słów lub inną stronę
+            }
+            else
+            {
+                return NotFound(); // W razie problemów, np. braku słowa do usunięcia
+            }
         }
     }
 }
