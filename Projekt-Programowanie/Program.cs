@@ -38,8 +38,17 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+            name: "slowo",
+            pattern: "Word/{action=DodajSlowo}/{id?}", // Definicja trasy dla akcji DodajSlowo
+            defaults: new { controller = "Word", action = "DodajSlowo"});
+    endpoints.MapControllerRoute(
+            name: "pytanie",
+            pattern: "Question/{action=DodajPytanie}/{id?}", // Definicja trasy dla akcji DodajSlowo
+            defaults: new { controller = "Pytanie", action = "DodajPytanie" });
 });
 
 

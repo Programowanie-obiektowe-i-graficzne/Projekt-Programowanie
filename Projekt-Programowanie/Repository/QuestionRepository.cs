@@ -39,7 +39,7 @@ namespace Projekt_Programowanie.Repository
 
         public bool Add(Pytanie pytanie)
         {
-            _context.Add(pytanie);
+            _context.Pytania.Add(pytanie);
             return Save();
         }
 

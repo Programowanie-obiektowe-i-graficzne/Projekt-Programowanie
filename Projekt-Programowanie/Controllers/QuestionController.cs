@@ -29,17 +29,24 @@ namespace Projekt_Programowanie.Controllers
             IEnumerable<Pytanie> questions = await _questionRepository.GetPytaniaOdpowiedz(questionAnswer);
             return View(questions);
         }
-        [HttpPost]
+        [HttpPost("Question/DodajPytanie")]
         public IActionResult DodajPytanie(Pytanie pytanie)
         {
-            if (ModelState.IsValid)
+            var slowa = _context.Slowa.ToList();
+            ViewData["Slowa"] = slowa;
+            try
             {
                 _questionRepository.Add(pytanie);
                 _questionRepository.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Question");
+            }
+            catch (DbUpdateException ex)
+            {
+                ModelState.AddModelError("", "Wystąpił błąd zapisu do bazy danych: " + ex.Message);
             }
             return View(pytanie);
         }
+        [HttpGet("Question/DodajPytanie")]
         public IActionResult DodajPytanie()
         {
             var slowa = _context.Slowa.ToList();

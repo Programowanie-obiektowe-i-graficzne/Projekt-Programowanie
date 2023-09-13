@@ -11,11 +11,9 @@ namespace Projekt_Programowanie.Controllers
     public class WordController : Controller
     {
         private readonly IWordRepository _wordRepository;
-        private readonly DataContext _context;
         public WordController(IWordRepository wordRepository, DataContext context)
         {
             _wordRepository = wordRepository;
-            _context = context;
 
         }
         public async Task<IActionResult> Word()
@@ -34,17 +32,22 @@ namespace Projekt_Programowanie.Controllers
             var slowa = await _wordRepository.GetSlowoDlugosc(wordLength);
             return View(slowa);
         }
-        [HttpPost]
+        [HttpPost("Word/DodajSlowo")]
         public IActionResult DodajSlowo(Slowo slowo)
         {
-            if (ModelState.IsValid)
+            try
             {
                 _wordRepository.Add(slowo);
                 _wordRepository.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Word");
+            }
+            catch (DbUpdateException ex)
+            {
+                 ModelState.AddModelError("", "Wystąpił błąd zapisu do bazy danych: " + ex.Message);
             }
             return View(slowo);
         }
+        [HttpGet("Word/DodajSlowo")]
         public IActionResult DodajSlowo()
         {
             return View();

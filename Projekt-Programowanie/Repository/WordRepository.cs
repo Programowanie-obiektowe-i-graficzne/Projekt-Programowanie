@@ -44,7 +44,7 @@ namespace Projekt_Programowanie.Repository
 
         public bool Add(Slowo slowo)
         {
-            _context.Add(slowo);
+            _context.Slowa.Add(slowo);
             return Save();
         }
 
