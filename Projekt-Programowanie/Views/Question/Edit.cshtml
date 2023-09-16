@@ -6,7 +6,7 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form method="post" action="@Url.Action("PotwierdzEdytuj","Question")">
+<form method="post" action="@Url.Action("Edit","Question")">
     @Html.HiddenFor(model => model.ID_Pytania)
     <div class="form-group">
         <label asp-for="Tresc" class="control-label">Nazwa Słowa:</label>
@@ -31,6 +31,6 @@
         <span asp-validation-for="Odpowiedz" class="text-danger"></span>
     </div>
 
-    <input type="submit" class="btn btn-outline-success" />
+    <input class="btn btn-outline-success float-right" type="submit" asp-controller="Question" asp-action="Edit" />
     <a class="btn btn-secondary" asp-controller="Question" asp-action="Question">Anuluj</a>
 </form>

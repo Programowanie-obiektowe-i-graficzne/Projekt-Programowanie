@@ -73,6 +73,7 @@ namespace Projekt_Programowanie.Controllers
             _wordRepository.Update(slowo);
             return RedirectToAction("Word");
         }
+        [HttpGet("Word/Usun/{id}")]
         public async Task<IActionResult> Usun(int id)
         {
             var slowo = await _wordRepository.GetSlowo(id);
@@ -86,9 +87,9 @@ namespace Projekt_Programowanie.Controllers
         }
 
         [HttpPost("Word/PotwierdzUsuniecie")]
-        public IActionResult PotwierdzUsuniecie(int id)
+        public IActionResult PotwierdzUsuniecie(Slowo slowo)
         {
-            var success = _wordRepository.Delete(id);
+            var success = _wordRepository.Delete(slowo.ID_Slowa);
 
             if (success)
             {

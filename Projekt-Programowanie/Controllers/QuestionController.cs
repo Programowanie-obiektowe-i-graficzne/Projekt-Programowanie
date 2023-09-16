@@ -39,6 +39,7 @@ namespace Projekt_Programowanie.Controllers
                 _questionRepository.Add(pytanie);
                 _questionRepository.Save();
                 return RedirectToAction("Question");
+
             }
             catch (DbUpdateException ex)
             {
@@ -67,14 +68,14 @@ namespace Projekt_Programowanie.Controllers
             var pytanie = await _questionRepository.GetPytanie(id);
             if (pytanie == null)
             {
-                return NotFound(); // Jeśli słowo nie istnieje, zwróć NotFound
+                return NotFound();
             }
 
             return View(pytanie);
         }
 
-        [HttpPost("Question/PotwierdzEdytuj")]
-        public async Task<IActionResult> PotwierdzEdytuj(Pytanie pytanie)
+        [HttpPost("Question/Edytuj/{id}")]
+        public async Task<IActionResult> Edit(Pytanie pytanie)
         {
             ViewData["Slowa"] = _context.Slowa.ToList();
             _questionRepository.Update(pytanie);
@@ -86,16 +87,16 @@ namespace Projekt_Programowanie.Controllers
 
             if (pytanie == null)
             {
-                return NotFound(); // Jeśli słowo nie istnieje, zwróć NotFound
+                return NotFound(); 
             }
 
             return View(pytanie);
         }
 
         [HttpPost("Question/PotwierdzUsuniecie")]
-        public IActionResult PotwierdzUsuniecie(int id)
+        public IActionResult PotwierdzUsuniecie(Pytanie pytanie)
         {
-            var success = _questionRepository.Delete(id);
+            var success = _questionRepository.Delete(pytanie.ID_Pytania);
 
             if (success)
             {

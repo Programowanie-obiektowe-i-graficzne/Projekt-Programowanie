@@ -43,7 +43,7 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
         name: "pytanie",
-        pattern: "Question/{action}/{id?}", // Definicja trasy dla akcji DodajSlowo
+        pattern: "Question/{action}/{id?}",
         defaults: new { controller = "Question" });
     endpoints.MapControllerRoute(
         name: "slowo",
