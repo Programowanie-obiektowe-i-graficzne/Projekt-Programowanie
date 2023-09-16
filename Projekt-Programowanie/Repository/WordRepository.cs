@@ -49,15 +49,16 @@ namespace Projekt_Programowanie.Repository
             return Save();
         }
 
-        public bool Delete(Slowo slowo)
+        public bool Delete(int id)
         {
-            _context.Remove(slowo);
+            var slowoToDelete = _context.Slowa.Find(id);
+            _context.Slowa.Remove(slowoToDelete); // Usuń słowo
             return Save();
         }
 
         public bool Update(Slowo slowo)
         {
-            _context.Update(slowo);
+            _context.Slowa.Update(slowo);
             return Save();
         }
 

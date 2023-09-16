@@ -1,0 +1,17 @@
+﻿@using Projekt_Programowanie.Models.MODELS
+@model Pytanie
+@{
+    ViewData["Title"] = "Usuń Pytanie";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-danger">
+    Czy na pewno chcesz usunąć pytanie: <strong>@Model.Tresc</strong>?
+</div>
+
+<form method="post" action="@Url.Action("PotwierdzUsuniecie","Question")">
+    @Html.HiddenFor(model => model.ID_Pytania)
+    <button type="submit" class="btn btn-danger">Usuń</button>
+    <a class="btn btn-secondary" asp-controller="Question" asp-action="Question">Anuluj</a>
+</form>

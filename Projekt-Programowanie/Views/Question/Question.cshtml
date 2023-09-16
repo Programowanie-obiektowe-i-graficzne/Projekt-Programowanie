@@ -1,7 +1,7 @@
 ﻿@using Projekt_Programowanie.Models.MODELS
 @model IEnumerable<Pytanie>
 @{
-    ViewData["Title"] = "Dodaj pytanie lub odpowiedź";
+    ViewData["Title"] = "Lista Pytań";
 }
 
 <div class="row">
@@ -12,7 +12,10 @@
         <div class="form-group">
             @foreach (var item in Model)
             {
-                <div style ="color:forestgreen; font-size:x-large" class="text">@item.Tresc</div>
+                <div style ="color:forestgreen; font-size:x-large" class="text">@item.Tresc
+                <a style="font-size:medium; color:greenyellow" href="@Url.Action("Edit", "Question", new { id = item.ID_Pytania })">Edytuj</a>
+                <a style="font-size:medium; color:greenyellow" href="@Url.Action("Usun", "Question", new { id = item.ID_Pytania })">Usuń</a>
+                </div>
             }
         </div>
     </div>

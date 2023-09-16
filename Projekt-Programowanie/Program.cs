@@ -42,13 +42,13 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
     endpoints.MapControllerRoute(
-            name: "slowo",
-            pattern: "Word/{action=DodajSlowo}/{id?}", // Definicja trasy dla akcji DodajSlowo
-            defaults: new { controller = "Word", action = "DodajSlowo"});
+        name: "pytanie",
+        pattern: "Question/{action}/{id?}", // Definicja trasy dla akcji DodajSlowo
+        defaults: new { controller = "Question" });
     endpoints.MapControllerRoute(
-            name: "pytanie",
-            pattern: "Question/{action=DodajPytanie}/{id?}", // Definicja trasy dla akcji DodajSlowo
-            defaults: new { controller = "Pytanie", action = "DodajPytanie" });
+        name: "slowo",
+        pattern: "Word/{action}/{id?}", // Dla akcji w kontrolerze "Word"
+        defaults: new { controller = "Word" });
 });
 
 
