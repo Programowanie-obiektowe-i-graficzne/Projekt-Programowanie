@@ -26,11 +26,13 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Odpowiedz" class="control-label">Odpowiedź:</label>
-                        <select asp-for="Odpowiedz" class="form-select" />
-                        @foreach (var item in ViewData["Slowa"] as IEnumerable<Slowo>)
-                        {
-                            <option value="@item.ID_Slowa">@item.NazwaSlowa</option>
-                        }
+                        <select asp-for="Odpowiedz" class="form-control">
+                            <option value="">Wybierz odpowiedź...</option> <!-- Opcja domyślna -->
+                            @foreach (var item in ViewData["Slowa"] as IEnumerable<Slowo>)
+                            {
+                                <option value=@item.ID_Slowa>@item.NazwaSlowa</option>
+                            }
+                        </select>
                         <span asp-validation-for="Odpowiedz" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-3 mb-5">

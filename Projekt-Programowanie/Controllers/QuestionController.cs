@@ -13,18 +13,18 @@ namespace Projekt_Programowanie.Controllers
     public class QuestionController : Controller
     {
         private readonly IQuestionRepository _questionRepository;
-        private readonly DataContext _context;
-        public QuestionController(IQuestionRepository questionRepository, DataContext context)
+        private readonly IWordRepository _wordRepository;
+        public QuestionController(IQuestionRepository questionRepository, IWordRepository wordRepository)
         {
             _questionRepository = questionRepository;
-            _context = context;
+            _wordRepository = wordRepository;
         }
         public async Task<IActionResult> GetPytaniaTrudnosc(int questionDifficulty)
         {
             IEnumerable<Pytanie> questions = await _questionRepository.GetPytaniaTrudnosc(questionDifficulty);
             return View(questions);
         }
-        public async Task<IActionResult> GetPytaniaOdpowiedz(Slowo questionAnswer)
+        public async Task<IActionResult> GetPytaniaOdpowiedz(int questionAnswer)
         {
             IEnumerable<Pytanie> questions = await _questionRepository.GetPytaniaOdpowiedz(questionAnswer);
             return View(questions);
@@ -32,8 +32,6 @@ namespace Projekt_Programowanie.Controllers
         [HttpPost("Question/DodajPytanie")]
         public IActionResult DodajPytanie(Pytanie pytanie)
         {
-            var slowa = _context.Slowa.ToList();
-            ViewData["Slowa"] = slowa;
             try
             {
                 _questionRepository.Add(pytanie);
@@ -43,6 +41,8 @@ namespace Projekt_Programowanie.Controllers
             }
             catch (DbUpdateException ex)
             {
+                var slowa = _wordRepository.GetSlowa();
+                ViewData["Slowa"] = slowa;
                 ModelState.AddModelError("", "Wystąpił błąd zapisu do bazy danych: " + ex.Message);
             }
             return View(pytanie);
@@ -50,7 +50,7 @@ namespace Projekt_Programowanie.Controllers
         [HttpGet("Question/DodajPytanie")]
         public IActionResult DodajPytanie()
         {
-            var slowa = _context.Slowa.ToList();
+            IEnumerable<Slowo> slowa = _wordRepository.GetSlowa();
             ViewData["Slowa"] = slowa;
 
             return View();
@@ -63,7 +63,7 @@ namespace Projekt_Programowanie.Controllers
         [HttpGet("Question/Edytuj/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
-            var slowa = _context.Slowa.ToList();
+            var slowa = _wordRepository.GetSlowa();
             ViewData["Slowa"] = slowa;
             var pytanie = await _questionRepository.GetPytanie(id);
             if (pytanie == null)
@@ -77,7 +77,7 @@ namespace Projekt_Programowanie.Controllers
         [HttpPost("Question/Edytuj/{id}")]
         public async Task<IActionResult> Edit(Pytanie pytanie)
         {
-            ViewData["Slowa"] = _context.Slowa.ToList();
+            ViewData["Slowa"] = _wordRepository.GetSlowa();
             _questionRepository.Update(pytanie);
             return RedirectToAction("Question");
         }

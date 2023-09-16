@@ -27,9 +27,9 @@ namespace Projekt_Programowanie.Repository
             return await GetSlowo(5);
         }
 
-        public async Task<IEnumerable<Slowo>> GetSlowa()
+        public IEnumerable<Slowo> GetSlowa()
         {
-            return await _context.Slowa.OrderBy(p => p.ID_Slowa).ToListAsync();
+            return _context.Slowa.OrderBy(p => p.ID_Slowa).ToList();
         }
 
         public async Task<Slowo> GetSlowo(int id)
