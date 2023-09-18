@@ -262,27 +262,27 @@ namespace Projekt_Programowanie.Repository
                 for (int j = 0; j < list2.Count(); j++) //szukanie slowa 2
                 {
                     ss2 = znajdzSlowo(list2, znajdzPolaczenie(slowo1, slowo2), 0, 0, 0, 0, ss1, "", "", "", "", (r2 + j) % list2.Count());
-                    if (ss2 == "Nic")
+                    if (ss2 == "Nic" || ss2 == ss1)
                         continue;
                     for (int q = 0; q < list3.Count(); q++) //szukanie slowa 3
                     {
                         ss3 = znajdzSlowo(list3, znajdzPolaczenie(slowo1, slowo3), znajdzPolaczenie(slowo2, slowo3), 0, 0, 0, ss1, ss2, "", "", "", (r3 + q) % list3.Count());
-                        if (ss3 == "Nic")
+                        if (ss3 == "Nic" || ss3 == ss1 || ss3 == ss2)
                             continue;
                         for (int w = 0; w < list4.Count(); w++) //szukanie slowa 4
                         {
                             ss4 = znajdzSlowo(list4, znajdzPolaczenie(slowo1, slowo4), znajdzPolaczenie(slowo2, slowo4), znajdzPolaczenie(slowo3, slowo4), 0, 0, ss1, ss2, ss3, "", "", (r1 + w) % list4.Count());
-                            if (ss4 == "Nic")
+                            if (ss4 == "Nic" || ss4 == ss1 || ss4 == ss2 || ss4 == ss3)
                                 continue;
                             for (int e = 0; e < list5.Count(); e++) //szukanie slowa 5
                             {
                                 ss5 = znajdzSlowo(list5, znajdzPolaczenie(slowo1, slowo5), znajdzPolaczenie(slowo2, slowo5), znajdzPolaczenie(slowo3, slowo5), znajdzPolaczenie(slowo4, slowo5), 0, ss1, ss2, ss3, ss4, "", (r2 + e) % list5.Count());
-                                if (ss5 == "Nic")
+                                if (ss5 == "Nic" || ss5 == ss1 || ss5 == ss2 || ss5 == ss3 || ss5 == ss4)
                                     continue;
                                 for (int r = 0; r < list6.Count(); r++) //szukanie slowa 6
                                 {
                                     ss6 = znajdzSlowo(list6, znajdzPolaczenie(slowo1, slowo6), znajdzPolaczenie(slowo2, slowo6), znajdzPolaczenie(slowo3, slowo6), znajdzPolaczenie(slowo4, slowo6), znajdzPolaczenie(slowo5, slowo6), ss1, ss2, ss3, ss4, ss5, (r3 + r) % list6.Count());
-                                    if (ss6 == "Nic")
+                                    if (ss6 == "Nic" || ss6 == ss1 || ss6 == ss2 || ss6 == ss3 || ss6 == ss4 || ss6 == ss5)
                                         continue;
                                     else
                                         czy = true;
