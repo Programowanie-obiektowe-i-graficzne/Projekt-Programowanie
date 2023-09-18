@@ -20,7 +20,7 @@ namespace Projekt_Programowanie.Repository
         {
             return await _context.Uzytkownicy.Where(p => p.Nazwa == name).FirstOrDefaultAsync();
         }
-        public async Task<ICollection<Uzytkownik>> GetUzytkownicy()
+        public async Task<IEnumerable<Uzytkownik>> GetUzytkownicy()
         {
             return await _context.Uzytkownicy.OrderBy(p => p.ID_Uzytkownik).ToListAsync();
         }

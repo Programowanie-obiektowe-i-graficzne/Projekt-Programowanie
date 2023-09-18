@@ -1,4 +1,5 @@
-﻿using Projekt_Programowanie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
 
@@ -11,18 +12,18 @@ namespace Projekt_Programowanie.Repository
         {
             _context = context;
         }
-        public ICollection<Wzor> getWzory()
+        public async Task<IEnumerable<Wzor>> GetWzory()
         {
-            return _context.Wzory.OrderBy(p => p.ID_Wzoru).ToList();
+            return await _context.Wzory.OrderBy(p => p.ID_Wzoru).ToListAsync();
         }
-        public Wzor GetWzor(int id)
+        public async Task<Wzor> GetWzor(int id)
         {
-            return _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefault();
+            return await _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefaultAsync();
         }
 
-        ICollection<Wzor> IPatternRepository.GetWzoryWielkosc(int rozmiar)
+        public async Task<IEnumerable<Wzor>> GetWzoryWielkosc(int rozmiar)
         {
-            return _context.Wzory.Where(p => p.Rozmiar == rozmiar).ToList();
+            return await _context.Wzory.Where(p => p.Rozmiar == rozmiar).ToListAsync();
         }
     }
 }

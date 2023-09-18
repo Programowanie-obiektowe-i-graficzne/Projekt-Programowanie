@@ -6,8 +6,6 @@ using Projekt_Programowanie.Repository;
 
 namespace Projekt_Programowanie.Controllers
 {
-    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
-    [ApiController]
     public class PatternController : Controller
     {
         private readonly IPatternRepository _patternRepository;
@@ -16,27 +14,14 @@ namespace Projekt_Programowanie.Controllers
         {
             _patternRepository = patternRepository;
         }
-        [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Pytanie>))]
-        public IActionResult GetWzory()
+        public async Task<IActionResult> GetWzory()
         {
-            var wzory = _patternRepository.getWzory();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var wzory = await _patternRepository.GetWzory();
             return Ok(wzory);
         }
-        [HttpGet("{patternSize}")]
-        [ProducesResponseType(200, Type = typeof(Wzor))]
-        [ProducesResponseType(400)]
-        public IActionResult GetWzoryWielkosc(int patternSize)
+        public async Task<IActionResult> GetWzoryWielkosc(int patternSize)
         {
-            var wzory = _patternRepository.GetWzoryWielkosc(patternSize);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var wzory = await _patternRepository.GetWzoryWielkosc(patternSize);
             return Ok(wzory);
         }
     }

@@ -4,8 +4,8 @@ namespace Projekt_Programowanie.Interfaces
 {
     public interface IPatternRepository
     {
-        ICollection<Wzor> getWzory();
-        Wzor GetWzor(int id);
-        ICollection<Wzor> GetWzoryWielkosc(int rozmiar);
+        public Task<IEnumerable<Wzor>> GetWzory();
+        public Task<Wzor> GetWzor(int id);
+        public Task<IEnumerable<Wzor>> GetWzoryWielkosc(int rozmiar);
     }
 }

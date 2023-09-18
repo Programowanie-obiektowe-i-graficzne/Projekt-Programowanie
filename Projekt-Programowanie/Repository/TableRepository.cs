@@ -1,4 +1,5 @@
-﻿using Projekt_Programowanie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
 
@@ -12,18 +13,18 @@ namespace Projekt_Programowanie.Repository
             _context = context;
         }
 
-        public ICollection<TabelaWynikow> getTabelaWynikow()
+        public async Task<IEnumerable<TabelaWynikow>> GetTabelaWynikow()
         {
-            return _context.TabeleWynikow.OrderBy(p => p.ID_Wynikow).ToList();
+            return await _context.TabeleWynikow.OrderBy(p => p.ID_Wynikow).ToListAsync();
         }
 
-        public TabelaWynikow GetWynik(int id)
+        public async Task<TabelaWynikow> GetWynik(int id)
         {
-            return _context.TabeleWynikow.Where(p => p.ID_Wynikow == id).FirstOrDefault();
+            return await _context.TabeleWynikow.Where(p => p.ID_Wynikow == id).FirstOrDefaultAsync();
         }
-        public ICollection<TabelaWynikow> GetWynikiUzytkownik(Uzytkownik uzytkownik)
+        public async Task<IEnumerable<TabelaWynikow>> GetWynikiUzytkownik(Uzytkownik uzytkownik)
         {
-            return _context.TabeleWynikow.Where(p => p.Uzytkownicy==uzytkownik).ToList();
+            return await _context.TabeleWynikow.Where(p => p.Uzytkownicy==uzytkownik).ToListAsync();
         }
     }
 }
