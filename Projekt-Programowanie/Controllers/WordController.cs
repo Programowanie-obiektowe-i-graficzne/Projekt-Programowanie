@@ -19,7 +19,7 @@ namespace Projekt_Programowanie.Controllers
         }
         public async Task<IActionResult> Word()
         {
-            var slowa = _wordRepository.GetSlowa();
+            var slowa = await _wordRepository.GetSlowa();
             return View(slowa);
             
         }

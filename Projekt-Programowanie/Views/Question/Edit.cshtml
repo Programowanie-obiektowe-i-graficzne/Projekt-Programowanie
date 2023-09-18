@@ -1,5 +1,5 @@
 ﻿@using Projekt_Programowanie.Models.MODELS
-@model Pytanie
+@model PytanieVM
 @{
     ViewData["Title"] = "Edytuj Pytanie";
 }
@@ -7,7 +7,6 @@
 <h2>@ViewData["Title"]</h2>
 
 <form method="post" action="@Url.Action("Edit","Question")">
-    @Html.HiddenFor(model => model.ID_Pytania)
     <div class="form-group">
         <label asp-for="Tresc" class="control-label">Nazwa Słowa:</label>
         <input asp-for="Tresc" class="form-control" />
@@ -23,7 +22,7 @@
     <div class="form-group">
         <label asp-for="Odpowiedz" class="control-label">Odpowiedź:</label>
         <select asp-for="Odpowiedz" class="form-select">
-        @foreach (var item in ViewData["Slowa"] as IEnumerable<Slowo>)
+        @foreach (var item in Model.Slowa)
         {
             <option value="@item.ID_Slowa">@item.NazwaSlowa</option>
         }

@@ -49,7 +49,7 @@ app.UseEndpoints(endpoints =>
         defaults: new { controller = "Question" });
     endpoints.MapControllerRoute(
         name: "slowo",
-        pattern: "Word/{action}/{id?}", // Dla akcji w kontrolerze "Word"
+        pattern: "Word/{action}", // Dla akcji w kontrolerze "Word"
         defaults: new { controller = "Word" });
 });
 

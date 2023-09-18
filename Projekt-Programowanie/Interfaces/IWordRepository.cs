@@ -4,7 +4,7 @@ namespace Projekt_Programowanie.Interfaces
 {
     public interface IWordRepository
     {
-        public IEnumerable<Slowo> GetSlowa();
+        public Task<IEnumerable<Slowo>> GetSlowa();
         public Task<Slowo> GetSlowo(int id);
         public Task<IEnumerable<Slowo>> GetSlowoDlugosc(int dlugosc);
         public Task<Slowo> zwrocKolejne(IEnumerable<Slowo> collenction, int dlugosc);
