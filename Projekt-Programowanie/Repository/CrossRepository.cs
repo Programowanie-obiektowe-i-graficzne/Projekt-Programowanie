@@ -143,9 +143,9 @@ namespace Projekt_Programowanie.Repository
                 return 0;
             }
             int pomoc = 0;
-            for (int i = 0; i < dl1 - 1; i++)
+            for (int i = 0; i < dl1; i++)
             {
-                for (int j = 0; j < dl2 - 1; j++)
+                for (int j = 0; j < dl2; j++)
                 {
                     if(kier2 == 2)
                     {
@@ -185,13 +185,23 @@ namespace Projekt_Programowanie.Repository
 
         public string[,] wprowadzPuste(int gdzie, string[,] tab)
         {
-            int kieru = kierunek(gdzie);
-            int wspX = wsp_col(gdzie);
-            int wspY = wsp_line(gdzie);
+            string[,] pomoc = tab;
             int dlug = dlugosc(gdzie);
-            for (int i =0; i < dlug; i++)
+            int wspY = wsp_line(gdzie);
+            int wspX = wsp_col(gdzie);
+            int kieru = kierunek(gdzie);
+            if (kieru == 1)
             {
-                if (kieru == 1)
+                wspY += 1;
+            }
+            else
+            {
+                wspX += 1;
+            }
+            for (int i = 1; i < dlug; i++)
+            {
+                pomoc[wspY, wspX] = "";
+                if (kieru == 2)
                 {
                     wspX += 1;
                 }
@@ -199,10 +209,9 @@ namespace Projekt_Programowanie.Repository
                 {
                     wspY += 1;
                 }
-                tab[wspY, wspX] = "";
             }
 
-            return tab;
+            return pomoc;
         }
 
         public async Task<GenerowanaKrzyzowka> generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor)
@@ -210,12 +219,13 @@ namespace Projekt_Programowanie.Repository
             Wzor jaki = await GetWzorById(wzor);
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
             tab.Krzyzowka = gener.Krzyzowka;
-            tab.Krzyzowka = wprowadzPuste(jaki.Slowo1, tab.Krzyzowka);
-            tab.Krzyzowka = wprowadzPuste(jaki.Slowo2, tab.Krzyzowka);
-            tab.Krzyzowka = wprowadzPuste(jaki.Slowo3, tab.Krzyzowka);
-            tab.Krzyzowka = wprowadzPuste(jaki.Slowo4, tab.Krzyzowka);
-            tab.Krzyzowka = wprowadzPuste(jaki.Slowo5, tab.Krzyzowka);
-            tab.Krzyzowka = wprowadzPuste(jaki.Slowo6, tab.Krzyzowka);
+            tab.RozwiazywanaKrzyzowka = gener.Krzyzowka;
+            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo1, tab.RozwiazywanaKrzyzowka);
+            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo2, tab.RozwiazywanaKrzyzowka);
+            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo3, tab.RozwiazywanaKrzyzowka);
+            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo4, tab.RozwiazywanaKrzyzowka);
+            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo5, tab.RozwiazywanaKrzyzowka);
+            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo6, tab.RozwiazywanaKrzyzowka);
             return tab;
         }
 
@@ -232,7 +242,6 @@ namespace Projekt_Programowanie.Repository
 
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
             tab.Krzyzowka = new string[rozmiar, rozmiar];
-
             for (int i = 0; i < jaki.Rozmiar; i++)
             {
                 for (int j = 0; j < jaki.Rozmiar; j++)
@@ -241,12 +250,12 @@ namespace Projekt_Programowanie.Repository
                 }
             }
 
-            ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1) -1);
-            ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2) -1);
-            ICollection<Slowo> list3 = GetSlowoDlugosc(dlugosc(slowo3) -1);
-            ICollection<Slowo> list4 = GetSlowoDlugosc(dlugosc(slowo4) -1);
-            ICollection<Slowo> list5 = GetSlowoDlugosc(dlugosc(slowo5) -1);
-            ICollection<Slowo> list6 = GetSlowoDlugosc(dlugosc(slowo6) -1);
+            IEnumerable<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1) -1);
+            IEnumerable<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2) -1);
+            IEnumerable<Slowo> list3 = GetSlowoDlugosc(dlugosc(slowo3) -1);
+            IEnumerable<Slowo> list4 = GetSlowoDlugosc(dlugosc(slowo4) -1);
+            IEnumerable<Slowo> list5 = GetSlowoDlugosc(dlugosc(slowo5) -1);
+            IEnumerable<Slowo> list6 = GetSlowoDlugosc(dlugosc(slowo6) -1);
 
             Random ran = new Random();
             int r1 = ran.Next();
@@ -335,31 +344,49 @@ namespace Projekt_Programowanie.Repository
                 if (p6 == null)
                     p6 = await GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 4);
             }
-            tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
-            tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
-            tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
-            tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
-            tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
-            tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
+            tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, "1. "+p1.Tresc);
+            tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, "2. "+p2.Tresc);
+            tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, "3. "+p3.Tresc);
+            tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, "4. "+p4.Tresc);
+            tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, "5. "+p5.Tresc);
+            tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, "6. "+p6.Tresc);
+            tab = await generowanieDoRozw(tab, wzor);
             return tab;
         }
-        
-        public int sprawdzanie(GenerowanaKrzyzowka uzytkownika, GenerowanaKrzyzowka odpo)
+
+        public bool sprawdzanie(GenerowanaKrzyzowka uzytkownika, GenerowanaKrzyzowka odpo)
         {
-            for (int i =0; i < uzytkownika.Krzyzowka.Length; i++)
+            for (int i = 0; i < uzytkownika.Krzyzowka.Length; i++)
             {
-                for(int j=0; j < uzytkownika.Krzyzowka.Length; j++)
+                for (int j = 0; j < uzytkownika.Krzyzowka.Length; j++)
                 {
-                    if (uzytkownika.Krzyzowka[i,j] != odpo.Krzyzowka[i,j])
+                    if (uzytkownika.Krzyzowka[i, j] != odpo.Krzyzowka[i, j])
                     {
-                        return 0;
+                        return false;
                     }
                 }
             }
-            return 1;
+            return true;
         }
-
-        public String znajdzSlowo(ICollection<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
+        public async Task<GenerowanaKrzyzowka> wprowadzenieSlowa(string slow, GenerowanaKrzyzowka tab, int slowoX)
+        {
+            int kier = kierunek(slowoX);
+            int wspX = wsp_col(slowoX);
+            int wspY = wsp_line(slowoX);
+            int dlug = dlugosc(slowoX);
+            for (int i = 0; i < dlug; i++)
+            {
+                if (kier == 1)
+                {
+                    wspX += 1;
+                }
+                else
+                    wspY += 1;
+                tab.Krzyzowka[wspY, wspX] = slow[i].ToString();
+            }
+            return tab;
+        }
+        public String znajdzSlowo(IEnumerable<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
         {
             Slowo slow;
             int ile = lista.Count();
