@@ -24,7 +24,7 @@ namespace Projekt_Programowanie.Controllers
             IEnumerable<Pytanie> questions = await _questionRepository.GetPytaniaTrudnosc(questionDifficulty);
             return View(questions);
         }
-        public async Task<IActionResult> GetPytaniaOdpowiedz(int questionAnswer)
+        public async Task<IActionResult> GetPytaniaOdpowiedz(Slowo questionAnswer)
         {
             IEnumerable<Pytanie> questions = await _questionRepository.GetPytaniaOdpowiedz(questionAnswer);
             return View(questions);

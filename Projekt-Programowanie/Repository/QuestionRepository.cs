@@ -27,7 +27,7 @@ namespace Projekt_Programowanie.Repository
             return await _context.Pytania.Where(p => p.Trudnosc == trudnosc).ToListAsync();
         }
 
-        public async Task<IEnumerable<Pytanie>> GetPytaniaOdpowiedz(int odpowiedz)
+        public async Task<IEnumerable<Pytanie>> GetPytaniaOdpowiedz(Slowo odpowiedz)
         {
             return await _context.Pytania.Where(p => p.Odpowiedz == odpowiedz).ToListAsync();
         }

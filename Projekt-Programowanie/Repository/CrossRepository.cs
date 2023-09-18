@@ -28,7 +28,7 @@ namespace Projekt_Programowanie.Repository
             return _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefault();
         }
 
-        public Pytanie GetPytanieOdpowiedzTrud(int slowo, int trud)
+        public Pytanie GetPytanieOdpowiedzTrud(Slowo slowo, int trud)
         {
             return _context.Pytania.Where(p => p.Odpowiedz == slowo && p.Trudnosc == trud).FirstOrDefault();
         }
@@ -287,17 +287,17 @@ namespace Projekt_Programowanie.Repository
             for (int i = 0; i < 3; i++)
             {
                 if (p1 == null)
-                    p1 = GetPytanieOdpowiedzTrud(s1.ID_Slowa, (r1 + i) % 4);
+                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4);
                 if (p2 == null)
-                    p2 = GetPytanieOdpowiedzTrud(s2.ID_Slowa, (r1 + i + 1) % 4);
+                    p2 = GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 4);
                 if (p3 == null)
-                    p3 = GetPytanieOdpowiedzTrud(s3.ID_Slowa, (r1 + i + 2) % 4);
+                    p3 = GetPytanieOdpowiedzTrud(s3, (r1 + i + 2) % 4);
                 if (p4 == null)
-                    p4 = GetPytanieOdpowiedzTrud(s4.ID_Slowa, (r1 + 1 + i) % 4);
+                    p4 = GetPytanieOdpowiedzTrud(s4, (r1 + 1 + i) % 4);
                 if (p5 == null)
-                    p5 = GetPytanieOdpowiedzTrud(s5.ID_Slowa, (r1 + i) % 4);
+                    p5 = GetPytanieOdpowiedzTrud(s5, (r1 + i) % 4);
                 if (p6 == null)
-                    p6 = GetPytanieOdpowiedzTrud(s6.ID_Slowa, (r1 + 2 + i) % 4);
+                    p6 = GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 4);
             }
             if(p1 != null && p2 != null && p3 != null && p4 != null && p5 != null && p6 != null)
             {

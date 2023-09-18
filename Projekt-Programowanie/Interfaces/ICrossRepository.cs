@@ -6,7 +6,7 @@ namespace Projekt_Programowanie.Interfaces
 {
     public interface ICrossRepository
     {
-        public Pytanie GetPytanieOdpowiedzTrud(int slowo, int trud);
+        public Pytanie GetPytanieOdpowiedzTrud(Slowo slowo, int trud);
         public Task<IEnumerable<Krzyzowka>> GetKrzyzowki();
         public Task<Krzyzowka> GetKrzyzowkaById(int id);
         public Task<IEnumerable<Wzor>> GetWzory();
