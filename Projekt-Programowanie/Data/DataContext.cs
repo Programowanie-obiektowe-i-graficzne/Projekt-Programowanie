@@ -18,7 +18,7 @@ namespace Projekt_Programowanie.Data
         public DbSet<Uzytkownik> Uzytkownicy { get; set; }
         public DbSet<Wzor> Wzory { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source=C:\\Users\\grazi\\source\\repos\\Projekt-Programowanie\\Projekt-Programowanie\\Data\\krzyzowki.db");
+        => options.UseSqlite($"Data Source=C:\\Users\\mkraj\\source\\repos\\Programowanie-obiektowe-i-graficzne\\Projekt-Programowanie\\Projekt-Programowanie\\Data\\krzyzowki.db");
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Krzyzowka>()
