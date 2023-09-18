@@ -140,7 +140,7 @@ namespace Projekt_Programowanie.Repository
             {
                 return 0;
             }
-            int pomoc = -11;
+            int pomoc = 0;
             for (int i = 0; i < dl1 - 1; i++)
             {
                 for (int j = 0; j < dl2 - 1; j++)
@@ -181,6 +181,42 @@ namespace Projekt_Programowanie.Repository
             return polaczenie;
         }
 
+        public string[,] wprowadzPuste(int gdzie, string[,] tab)
+        {
+            int kieru = kierunek(gdzie);
+            int wspX = wsp_col(gdzie);
+            int wspY = wsp_line(gdzie);
+            int dlug = dlugosc(gdzie);
+            for (int i =0; i < dlug; i++)
+            {
+                if (kieru == 1)
+                {
+                    wspX += 1;
+                }
+                else
+                {
+                    wspY += 1;
+                }
+                tab[wspY, wspX] = "";
+            }
+
+            return tab;
+        }
+
+        public GenerowanaKrzyzowka generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor)
+        {
+            Wzor jaki = GetWzorById(wzor);
+            GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
+            tab.Krzyzowka = gener.Krzyzowka;
+            tab.Krzyzowka = wprowadzPuste(jaki.Slowo1, tab.Krzyzowka);
+            tab.Krzyzowka = wprowadzPuste(jaki.Slowo2, tab.Krzyzowka);
+            tab.Krzyzowka = wprowadzPuste(jaki.Slowo3, tab.Krzyzowka);
+            tab.Krzyzowka = wprowadzPuste(jaki.Slowo4, tab.Krzyzowka);
+            tab.Krzyzowka = wprowadzPuste(jaki.Slowo5, tab.Krzyzowka);
+            tab.Krzyzowka = wprowadzPuste(jaki.Slowo6, tab.Krzyzowka);
+            return tab;
+        }
+
         public GenerowanaKrzyzowka generowanie(int wzor)
         {
             Wzor jaki = GetWzorById(wzor);
@@ -202,13 +238,6 @@ namespace Projekt_Programowanie.Repository
                     tab.Krzyzowka[i, j] = "?";
                 }
             }
-
-            /* tab = wprowadz(slowo1, tab);
-             tab = wprowadz(slowo2, tab);
-             tab = wprowadz(slowo3, tab);
-             tab = wprowadz(slowo4, tab);
-             tab = wprowadz(slowo5, tab);
-             tab = wprowadz(slowo6, tab); */
 
             ICollection<Slowo> list1 = GetSlowoDlugosc(dlugosc(slowo1) -1);
             ICollection<Slowo> list2 = GetSlowoDlugosc(dlugosc(slowo2) -1);
@@ -315,6 +344,20 @@ namespace Projekt_Programowanie.Repository
         return tab;
         }
         
+        public int sprawdzanie(GenerowanaKrzyzowka uzytkownika, GenerowanaKrzyzowka odpo)
+        {
+            for (int i =0; i < uzytkownika.Krzyzowka.Length; i++)
+            {
+                for(int j=0; j < uzytkownika.Krzyzowka.Length; j++)
+                {
+                    if (uzytkownika.Krzyzowka[i,j] != odpo.Krzyzowka[i,j])
+                    {
+                        return 0;
+                    }
+                }
+            }
+            return 1;
+        }
 
         public String znajdzSlowo(ICollection<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
         {
