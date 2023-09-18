@@ -23,19 +23,19 @@ namespace Projekt_Programowanie.Repository
             return await _context.Wzory.OrderBy(p=>p.ID_Wzoru).ToListAsync();
         }
 
-        public Wzor GetWzorById(int id)
+        public async Task<Wzor> GetWzorById(int id)
         {
-            return _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefault();
+            return await _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefaultAsync();
         }
 
-        public Pytanie GetPytanieOdpowiedzTrud(Slowo slowo, int trud)
+        public async Task<Pytanie> GetPytanieOdpowiedzTrud(Slowo slowo, int trud)
         {
-            return _context.Pytania.Where(p => p.Odpowiedz == slowo && p.Trudnosc == trud).FirstOrDefault();
+            return await _context.Pytania.Where(p => p.Odpowiedz == slowo && p.Trudnosc == trud).FirstOrDefaultAsync();
         }
 
-        public Slowo GetSlowoNaz(string nazwa)
+        public async Task<Slowo> GetSlowoNaz(string nazwa)
         {
-            return _context.Slowa.Where(p => p.NazwaSlowa == nazwa).FirstOrDefault();
+            return await _context.Slowa.Where(p => p.NazwaSlowa == nazwa).FirstOrDefaultAsync();
         }
         public int dlugosc(int dane)
         {
@@ -205,9 +205,9 @@ namespace Projekt_Programowanie.Repository
             return tab;
         }
 
-        public GenerowanaKrzyzowka generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor)
+        public async Task<GenerowanaKrzyzowka> generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor)
         {
-            Wzor jaki = GetWzorById(wzor);
+            Wzor jaki = await GetWzorById(wzor);
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
             tab.Krzyzowka = gener.Krzyzowka;
             tab.Krzyzowka = wprowadzPuste(jaki.Slowo1, tab.Krzyzowka);
@@ -219,9 +219,9 @@ namespace Projekt_Programowanie.Repository
             return tab;
         }
 
-        public GenerowanaKrzyzowka generowanie(int wzor)
+        public async Task<GenerowanaKrzyzowka> generowanie(int wzor)
         {
-            Wzor jaki = GetWzorById(wzor);
+            Wzor jaki = await GetWzorById(wzor);
             int rozmiar = jaki.Rozmiar;
             int slowo1 = jaki.Slowo1;
             int slowo2 = jaki.Slowo2;
@@ -305,12 +305,12 @@ namespace Projekt_Programowanie.Repository
                     break;
             }
 
-            Slowo s1 = GetSlowoNaz(ss1);
-            Slowo s2 = GetSlowoNaz(ss2);
-            Slowo s3 = GetSlowoNaz(ss3);
-            Slowo s4 = GetSlowoNaz(ss4);
-            Slowo s5 = GetSlowoNaz(ss5);
-            Slowo s6 = GetSlowoNaz(ss6);
+            Slowo s1 = await GetSlowoNaz(ss1);
+            Slowo s2 = await GetSlowoNaz(ss2);
+            Slowo s3 = await GetSlowoNaz(ss3);
+            Slowo s4 = await GetSlowoNaz(ss4);
+            Slowo s5 = await GetSlowoNaz(ss5);
+            Slowo s6 = await GetSlowoNaz(ss6);
 
             Pytanie p1 = null;
             Pytanie p2 = null;
@@ -320,35 +320,27 @@ namespace Projekt_Programowanie.Repository
             Pytanie p6 = null;
 
             r1 = (r1 % 3);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 if (p1 == null)
-                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4);
+                    p1 = await GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4);
                 if (p2 == null)
-                    p2 = GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 4);
+                    p2 = await GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 4);
                 if (p3 == null)
-                    p3 = GetPytanieOdpowiedzTrud(s3, (r1 + i + 2) % 4);
+                    p3 = await GetPytanieOdpowiedzTrud(s3, (r1 + i + 2) % 4);
                 if (p4 == null)
-                    p4 = GetPytanieOdpowiedzTrud(s4, (r1 + 1 + i) % 4);
+                    p4 = await GetPytanieOdpowiedzTrud(s4, (r1 + 1 + i) % 4);
                 if (p5 == null)
-                    p5 = GetPytanieOdpowiedzTrud(s5, (r1 + i) % 4);
+                    p5 = await GetPytanieOdpowiedzTrud(s5, (r1 + i) % 4);
                 if (p6 == null)
-                    p6 = GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 4);
+                    p6 = await GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 4);
             }
-            if(p1 != null && p2 != null && p3 != null && p4 != null && p5 != null && p6 != null)
-            {
-                tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
-                tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
-                tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
-                tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
-                tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
-                tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
-            }
-            else
-            {
-                Console.WriteLine("", "Wystąpił błąd generowania");
-                return new GenerowanaKrzyzowka();
-            }
+            tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
+            tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
+            tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
+            tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
+            tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
+            tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
             return tab;
         }
         

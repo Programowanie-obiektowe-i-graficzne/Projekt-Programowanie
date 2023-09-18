@@ -1,5 +1,5 @@
 ﻿@using Projekt_Programowanie.Models.MODELS
-@model Pytanie
+@model PytanieVM
 @{
     ViewData["Title"] = "Dodaj Pytanie";
 }
@@ -28,7 +28,7 @@
                         <label asp-for="Odpowiedz" class="control-label">Odpowiedź:</label>
                         <select asp-for="Odpowiedz" class="form-control">
                             <option value="">Wybierz odpowiedź...</option> <!-- Opcja domyślna -->
-                            @foreach (var item in ViewData["Slowa"] as IEnumerable<Slowo>)
+                            @foreach (var item in Model.Slowa)
                             {
                                 <option value=@item.ID_Slowa>@item.NazwaSlowa</option>
                             }

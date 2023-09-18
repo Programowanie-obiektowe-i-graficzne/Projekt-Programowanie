@@ -30,10 +30,16 @@ namespace Projekt_Programowanie.Controllers
             return View(questions);
         }
         [HttpPost("Question/DodajPytanie")]
-        public IActionResult DodajPytanie(Pytanie pytanie)
+        public async Task<IActionResult> DodajPytanie(PytanieVM pytanieVM)
         {
             try
             {
+                Pytanie pytanie = new Pytanie
+                {
+                    Tresc = pytanieVM.Tresc,
+                    Trudnosc = pytanieVM.Trudnosc,
+                    Odpowiedz = await _wordRepository.GetSlowo(pytanieVM.Odpowiedz)
+                };
                 _questionRepository.Add(pytanie);
                 _questionRepository.Save();
                 return RedirectToAction("Question");
@@ -45,15 +51,20 @@ namespace Projekt_Programowanie.Controllers
                 ViewData["Slowa"] = slowa;
                 ModelState.AddModelError("", "Wystąpił błąd zapisu do bazy danych: " + ex.Message);
             }
-            return View(pytanie);
+            return View(pytanieVM);
         }
         [HttpGet("Question/DodajPytanie")]
-        public IActionResult DodajPytanie()
+        public async Task<IActionResult> DodajPytanie()
         {
-            IEnumerable<Slowo> slowa = _wordRepository.GetSlowa();
-            ViewData["Slowa"] = slowa;
-
-            return View();
+            var slowa = await _wordRepository.GetSlowa();
+            var pytanieVM = new PytanieVM
+            {
+                Slowa = slowa,
+                Trudnosc = 0,
+                Tresc = "",
+                Odpowiedz = 0
+            };
+            return View(pytanieVM);
         }
         public async Task<IActionResult> Question()
         {
@@ -63,21 +74,31 @@ namespace Projekt_Programowanie.Controllers
         [HttpGet("Question/Edytuj/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
-            var slowa = _wordRepository.GetSlowa();
-            ViewData["Slowa"] = slowa;
+            var slowa = await _wordRepository.GetSlowa();
             var pytanie = await _questionRepository.GetPytanie(id);
+            var pytanieVM = new PytanieVM
+            {
+                ID = id,
+                Slowa = slowa,
+                Tresc = pytanie.Tresc,
+                Trudnosc = pytanie.Trudnosc,
+                Odpowiedz = pytanie.Odpowiedz.ID_Slowa
+            };
             if (pytanie == null)
             {
                 return NotFound();
             }
 
-            return View(pytanie);
+            return View(pytanieVM);
         }
 
         [HttpPost("Question/Edytuj/{id}")]
-        public async Task<IActionResult> Edit(Pytanie pytanie)
+        public async Task<IActionResult> Edit(PytanieVM pytanievm)
         {
-            ViewData["Slowa"] = _wordRepository.GetSlowa();
+            var pytanie = await _questionRepository.GetPytanie(pytanievm.ID);
+            pytanie.Tresc = pytanievm.Tresc;
+            pytanie.Trudnosc = pytanievm.Trudnosc;
+            pytanie.Odpowiedz = await _wordRepository.GetSlowo(pytanievm.Odpowiedz);
             _questionRepository.Update(pytanie);
             return RedirectToAction("Question");
         }
