@@ -22,24 +22,19 @@ namespace Projekt_Programowanie.Repository
             return await _context.Pytania.Where(p => p.ID_Pytania == id).FirstOrDefaultAsync();
         }
 
-        public async Task<Pytanie> GetPytanie(string pytanie)
-        {
-            return await _context.Pytania.Where(p => p.Tresc == pytanie).FirstOrDefaultAsync();
-        }
-
         public async Task<IEnumerable<Pytanie>> GetPytaniaTrudnosc(int trudnosc)
         {
             return await _context.Pytania.Where(p => p.Trudnosc == trudnosc).ToListAsync();
         }
 
-        public async Task<IEnumerable<Pytanie>> GetPytaniaOdpowiedz(Slowo odpowiedz)
+        public async Task<IEnumerable<Pytanie>> GetPytaniaOdpowiedz(int odpowiedz)
         {
             return await _context.Pytania.Where(p => p.Odpowiedz == odpowiedz).ToListAsync();
         }
 
         public bool Add(Pytanie pytanie)
         {
-            _context.Add(pytanie);
+            _context.Pytania.Add(pytanie);
             return Save();
         }
 
@@ -49,15 +44,16 @@ namespace Projekt_Programowanie.Repository
             return saved > 0 ? true : false;
         }
 
-        public bool Delete(Pytanie pytanie)
+        public bool Delete(int id)
         {
-            _context.Remove(pytanie);
+            var pytanie = _context.Pytania.Find(id);
+            _context.Pytania.Remove(pytanie);
             return Save();
         }
 
         public bool Update(Pytanie pytanie)
         {
-            _context.Update(pytanie);
+            _context.Pytania.Update(pytanie);
             return Save();
         }
     }

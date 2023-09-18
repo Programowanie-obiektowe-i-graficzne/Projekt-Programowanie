@@ -27,9 +27,9 @@ namespace Projekt_Programowanie.Repository
             return await GetSlowo(5);
         }
 
-        public async Task<IEnumerable<Slowo>> GetSlowa()
+        public IEnumerable<Slowo> GetSlowa()
         {
-            return await _context.Slowa.OrderBy(p => p.ID_Slowa).ToListAsync();
+            return _context.Slowa.OrderBy(p => p.ID_Slowa).ToList();
         }
 
         public async Task<Slowo> GetSlowo(int id)
@@ -44,19 +44,21 @@ namespace Projekt_Programowanie.Repository
 
         public bool Add(Slowo slowo)
         {
-            _context.Add(slowo);
+            slowo.NazwaSlowa = slowo.NazwaSlowa.ToLower();
+            _context.Slowa.Add(slowo);
             return Save();
         }
 
-        public bool Delete(Slowo slowo)
+        public bool Delete(int id)
         {
-            _context.Remove(slowo);
+            var slowoToDelete = _context.Slowa.Find(id);
+            _context.Slowa.Remove(slowoToDelete); // Usuń słowo
             return Save();
         }
 
         public bool Update(Slowo slowo)
         {
-            _context.Update(slowo);
+            _context.Slowa.Update(slowo);
             return Save();
         }
 

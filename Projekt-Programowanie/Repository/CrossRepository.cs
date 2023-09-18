@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models;
@@ -26,7 +28,7 @@ namespace Projekt_Programowanie.Repository
             return _context.Wzory.Where(p => p.ID_Wzoru == id).FirstOrDefault();
         }
 
-        public Pytanie GetPytanieOdpowiedzTrud(Slowo slowo, int trud)
+        public Pytanie GetPytanieOdpowiedzTrud(int slowo, int trud)
         {
             return _context.Pytania.Where(p => p.Odpowiedz == slowo && p.Trudnosc == trud).FirstOrDefault();
         }
@@ -102,17 +104,17 @@ namespace Projekt_Programowanie.Repository
             pomoc[wspY, wspX] = pytanie;
             if (kieru == 1) //prawo
             {
-                wspX += 1;
+                wspY += 1;
             }
             else
             {
-                wspY += 1;
+                wspX += 1;
             }
             for (int i = 1; i < dlug; i++)
             {
                 pomoc[wspY, wspX] = slowo[pom].ToString();
                 pom += 1;
-                if (kieru == 1)
+                if (kieru == 2)
                 {
                     wspX += 1;
                 }
@@ -145,7 +147,7 @@ namespace Projekt_Programowanie.Repository
             {
                 for (int j = 0; j < dl2 - 1; j++)
                 {
-                    if(kier2 == 1)
+                    if(kier2 == 2)
                     {
                         x2 += 1;
                     }
@@ -164,7 +166,7 @@ namespace Projekt_Programowanie.Repository
                 {
                     break;
                 }
-                if(kier1 == 1)
+                if(kier1 == 2)
                 {
                     x1 += 1;
                 }
@@ -231,9 +233,9 @@ namespace Projekt_Programowanie.Repository
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
             tab.Krzyzowka = new string[rozmiar, rozmiar];
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < jaki.Rozmiar; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < jaki.Rozmiar; j++)
                 {
                     tab.Krzyzowka[i, j] = "?";
                 }
@@ -318,30 +320,36 @@ namespace Projekt_Programowanie.Repository
             Pytanie p6 = null;
 
             r1 = (r1 % 3);
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (p1 == null)
-                    p1 = GetPytanieOdpowiedzTrud(s1, (r1 + i) % 4); 
+                    p1 = GetPytanieOdpowiedzTrud(s1.ID_Slowa, (r1 + i) % 4);
                 if (p2 == null)
-                    p2 = GetPytanieOdpowiedzTrud(s2, (r1 + i + 1) % 4);
+                    p2 = GetPytanieOdpowiedzTrud(s2.ID_Slowa, (r1 + i + 1) % 4);
                 if (p3 == null)
-                    p3 = GetPytanieOdpowiedzTrud(s3, (r1 + i + 2) % 4);
+                    p3 = GetPytanieOdpowiedzTrud(s3.ID_Slowa, (r1 + i + 2) % 4);
                 if (p4 == null)
-                    p4 = GetPytanieOdpowiedzTrud(s4, (r1 + 1 + i) % 4);
+                    p4 = GetPytanieOdpowiedzTrud(s4.ID_Slowa, (r1 + 1 + i) % 4);
                 if (p5 == null)
-                    p5 = GetPytanieOdpowiedzTrud(s5, (r1 + i) % 4);
+                    p5 = GetPytanieOdpowiedzTrud(s5.ID_Slowa, (r1 + i) % 4);
                 if (p6 == null)
-                    p6 = GetPytanieOdpowiedzTrud(s6, (r1 + 2 + i) % 4);
+                    p6 = GetPytanieOdpowiedzTrud(s6.ID_Slowa, (r1 + 2 + i) % 4);
             }
-
-            tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
-            tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
-            tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
-            tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
-            tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
-            tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
-
-        return tab;
+            if(p1 != null && p2 != null && p3 != null && p4 != null && p5 != null && p6 != null)
+            {
+                tab.Krzyzowka = wprowadz(slowo1, tab.Krzyzowka, ss1, p1.Tresc);
+                tab.Krzyzowka = wprowadz(slowo2, tab.Krzyzowka, ss2, p2.Tresc);
+                tab.Krzyzowka = wprowadz(slowo3, tab.Krzyzowka, ss3, p3.Tresc);
+                tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, p4.Tresc);
+                tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, p5.Tresc);
+                tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, p6.Tresc);
+            }
+            else
+            {
+                Console.WriteLine("", "Wystąpił błąd generowania");
+                return new GenerowanaKrzyzowka();
+            }
+            return tab;
         }
         
         public int sprawdzanie(GenerowanaKrzyzowka uzytkownika, GenerowanaKrzyzowka odpo)
@@ -361,7 +369,6 @@ namespace Projekt_Programowanie.Repository
 
         public String znajdzSlowo(ICollection<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
         {
-            String wyraz;
             Slowo slow;
             int ile = lista.Count();
             if(polocz1 == 0)

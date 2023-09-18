@@ -1,0 +1,31 @@
+﻿@using Projekt_Programowanie.Models.MODELS
+@model Slowo
+@{
+    ViewData["Title"] = "Edytuj Słowo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" action="@Url.Action("PotwierdzEdytuj","Word")">
+    @Html.HiddenFor(model => model.ID_Slowa)
+    <div class="form-group">
+        <label asp-for="NazwaSlowa" class="control-label">Nazwa Słowa:</label>
+        <input asp-for="NazwaSlowa" class="form-control" />
+        <span asp-validation-for="NazwaSlowa" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Kategoria" class="control-label">Kategoria:</label>
+        <input asp-for="Kategoria" class="form-control" />
+        <span asp-validation-for="Kategoria" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Dl_Slowa" class="control-label">Długość Słowa:</label>
+        <input asp-for="Dl_Slowa" class="form-control" />
+        <span asp-validation-for="Dl_Slowa" class="text-danger"></span>
+    </div>
+
+    <input class="btn btn-outline-success float-right" type="submit" asp-controller="Word" asp-action="PotwierdzEdytuj" />
+    <a class="btn btn-secondary" asp-controller="Word" asp-action="Word">Anuluj</a>
+</form>

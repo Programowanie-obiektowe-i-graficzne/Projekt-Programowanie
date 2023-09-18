@@ -1,0 +1,40 @@
+﻿@using Projekt_Programowanie.Models.MODELS
+@model Slowo
+@{
+    ViewData["Title"] = "Dodaj Slowo";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Dodaj Slowo</h4>
+        </p>
+        <div class="form-group">
+            <div class="col-md-8 offset-2">
+                <form asp-action="DodajSlowo">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="NazwaSlowa" class="control-label">Treść Słowa:</label>
+                        <input asp-for="NazwaSlowa" class="form-control" style="text-transform:lowercase"/>
+                        <span asp-validation-for="NazwaSlowa" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Kategoria" class="control-label">Kategoria:</label>
+                        <input asp-for="Kategoria" class="form-control" />
+                        <span asp-validation-for="Kategoria" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Dl_Slowa" class="control-label">Długość Słowa:</label>
+                        <input asp-for="Dl_Slowa" class="form-control"/>
+                        <span asp-validation-for="Dl_Slowa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-3 mb-5">
+                        <input class="btn btn-outline-success float-right" type="submit" asp-controller="Word" asp-action="DodajSlowo" />
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Dodaj">Anuluj</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

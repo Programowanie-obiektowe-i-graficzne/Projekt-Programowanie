@@ -1,0 +1,18 @@
+﻿@model Projekt_Programowanie.Models.MODELS.Slowo
+@{
+    ViewData["Title"] = "Usuń Słowo";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="alert alert-danger">
+    Czy na pewno chcesz usunąć słowo: <strong>@Model.NazwaSlowa</strong>?
+</div>
+
+<form method="post" asp-controller="Word" asp-action="PotwierdzUsuniecie">
+    @Html.HiddenFor(model => model.ID_Slowa)
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-outline-success float-right">Usuń</button>
+        <a asp-controller="Word" asp-action="Word" class="btn btn-secondary">Anuluj</a>
+    </div>
+</form>

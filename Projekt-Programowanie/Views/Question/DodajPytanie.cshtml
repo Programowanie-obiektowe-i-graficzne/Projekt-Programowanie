@@ -1,39 +1,42 @@
 ﻿@using Projekt_Programowanie.Models.MODELS
-@model Slowo
+@model Pytanie
 @{
-    ViewData["Title"] = "Dodaj pytanie";
+    ViewData["Title"] = "Dodaj Pytanie";
 }
 
 <div class="row">
     <div class="col-md-8 offset-2">
         <p>
-            <h4>Dodaj Slowo</h4>
+            <h4>Dodaj Pytanie</h4>
         </p>
         <div class="form-group">
             <div class="col-md-8 offset-2">
-                <form asp-action="Dodaj pytanie">
+                <form asp-action="DodajPytanie">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="NazwaSlowa" class="control-label"></label>
-                        <input asp-for="NazwaSlowa" class="form-control" />
-                        <span asp-validation-for="NazwaSlowa" class="text-danger"></span>
+                        <label asp-for="Tresc" class="control-label">Treść Pytania:</label>
+                        <input asp-for="Tresc" class="form-control" />
+                        <span asp-validation-for="Tresc" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="Kategoria" class="control-label"></label>
-                        <input asp-for="Kategoria" class="form-control" />
-                        <span asp-validation-for="Kategoria" class="text-danger"></span>
+                        <label asp-for="Trudnosc" class="control-label">Trudność:</label>
+                        <input asp-for="Trudnosc" class="form-select-sm" />
+                        <span asp-validation-for="Trudnosc" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Pytania" class="control-label"></label>
-                        <select asp-for="Pytania" class="form-select"/>
-                        @foreach(var item in Model.Pytania){
-                            <option value="@item.Tresc">@item.Tresc</option>
-                        }
-                        <span asp-validation-for="Pytania" class="text-danger"></span>
+                        <label asp-for="Odpowiedz" class="control-label">Odpowiedź:</label>
+                        <select asp-for="Odpowiedz" class="form-control">
+                            <option value="">Wybierz odpowiedź...</option> <!-- Opcja domyślna -->
+                            @foreach (var item in ViewData["Slowa"] as IEnumerable<Slowo>)
+                            {
+                                <option value=@item.ID_Slowa>@item.NazwaSlowa</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Odpowiedz" class="text-danger"></span>
                     </div>
                     <div class="form-group mt-3 mb-5">
-                        <input class="btn btn-outline-success float-right" type="submit" asp-controller="Home" asp-action="Dodaj" />
+                        <input class="btn btn-outline-success float-right" type="submit" asp-controller="Question" asp-action="DodajPytanie" />
                         <a class="btn btn-outline-secondary" asp-controller="Cross" asp-action="Cross">Anuluj</a>
                     </div>
                 </form>
@@ -41,3 +44,4 @@
         </div>
     </div>
 </div>
+

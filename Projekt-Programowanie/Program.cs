@@ -35,9 +35,21 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapControllerRoute(
+        name: "pytanie",
+        pattern: "Question/{action}/{id?}",
+        defaults: new { controller = "Question" });
+    endpoints.MapControllerRoute(
+        name: "slowo",
+        pattern: "Word/{action}/{id?}", // Dla akcji w kontrolerze "Word"
+        defaults: new { controller = "Word" });
+});
+
 
 app.Run();
