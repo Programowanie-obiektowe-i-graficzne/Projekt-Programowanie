@@ -226,7 +226,7 @@ namespace Projekt_Programowanie.Repository
             int slowo1 = jaki.Slowo1;
             int slowo2 = jaki.Slowo2;
             int slowo3 = jaki.Slowo3;
-            int slowo4 = jaki.Slowo5;
+            int slowo4 = jaki.Slowo4;
             int slowo5 = jaki.Slowo5;
             int slowo6 = jaki.Slowo6;
 

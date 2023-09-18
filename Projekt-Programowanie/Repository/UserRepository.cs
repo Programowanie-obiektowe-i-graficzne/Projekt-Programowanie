@@ -1,4 +1,5 @@
-﻿using Projekt_Programowanie.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
 using Projekt_Programowanie.Models.MODELS;
 
@@ -11,17 +12,17 @@ namespace Projekt_Programowanie.Repository
         {
             _context = context;
         }
-        public Uzytkownik GetUzytkownik(int id)
+        public async Task<Uzytkownik> GetUzytkownik(int id)
         {
-            return _context.Uzytkownicy.Where(p => p.ID_Uzytkownik == id).FirstOrDefault();
+            return await _context.Uzytkownicy.Where(p => p.ID_Uzytkownik == id).FirstOrDefaultAsync();
         }
-        public Uzytkownik GetUzytkownik(string name)
+        public async Task<Uzytkownik> GetUzytkownik(string name)
         {
-            return _context.Uzytkownicy.Where(p => p.Nazwa == name).FirstOrDefault();
+            return await _context.Uzytkownicy.Where(p => p.Nazwa == name).FirstOrDefaultAsync();
         }
-        public ICollection<Uzytkownik> getUzytkownicy()
+        public async Task<ICollection<Uzytkownik>> GetUzytkownicy()
         {
-            return _context.Uzytkownicy.OrderBy(p => p.ID_Uzytkownik).ToList();
+            return await _context.Uzytkownicy.OrderBy(p => p.ID_Uzytkownik).ToListAsync();
         }
     }
 }

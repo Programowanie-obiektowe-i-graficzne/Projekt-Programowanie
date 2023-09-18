@@ -4,9 +4,9 @@ namespace Projekt_Programowanie.Interfaces
 {
     public interface IUserRepository
     {
-        ICollection<Uzytkownik> getUzytkownicy();
-        Uzytkownik GetUzytkownik(int id);
-        Uzytkownik GetUzytkownik(string username);
+        public Task<ICollection<Uzytkownik>> GetUzytkownicy();
+        public Task<Uzytkownik> GetUzytkownik(int id);
+        public Task<Uzytkownik> GetUzytkownik(string username);
 
     }
 }

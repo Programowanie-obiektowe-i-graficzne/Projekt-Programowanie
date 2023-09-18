@@ -14,40 +14,20 @@ namespace Projekt_Programowanie.Controllers
         {
             _userRepository = userRepository;
         }
-        [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Uzytkownik>))]
-        public IActionResult GetUzytkownicy()
+        public async Task<IActionResult> GetUzytkownicy()
         {
-            var uzytkownicy = _userRepository.getUzytkownicy();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(uzytkownicy);
+            var uzytkownicy = await _userRepository.GetUzytkownicy();
+            return View(uzytkownicy);
         }
-        [HttpGet("{userId}")]
-        [ProducesResponseType(200, Type = typeof(Uzytkownik))]
-        [ProducesResponseType(400)]
-        public IActionResult GetUzytkownik(int userId)
+        public async Task<IActionResult> GetUzytkownik(int userId)
         {
-            var uzytkownik = _userRepository.GetUzytkownik(userId);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(uzytkownik);
+            var uzytkownik = await _userRepository.GetUzytkownik(userId);
+            return View(uzytkownik);
         }
-        [HttpGet("{userName}")]
-        [ProducesResponseType(200, Type = typeof(Uzytkownik))]
-        [ProducesResponseType(400)]
-        public IActionResult GetUzytkownik(string userName)
+        public async Task<IActionResult> GetUzytkownik(string userName)
         {
-            var uzytkownik = _userRepository.GetUzytkownik(userName);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            return Ok(uzytkownik);
+            var uzytkownik = await _userRepository.GetUzytkownik(userName);
+            return View(uzytkownik);
         }
     }
 }
