@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Projekt_Programowanie.Data;
 using Projekt_Programowanie.Interfaces;
+using Projekt_Programowanie.Models;
 using Projekt_Programowanie.Models.MODELS;
 using Projekt_Programowanie.Repository;
 
@@ -23,15 +24,17 @@ namespace Projekt_Programowanie.Controllers
         {
             return View();
         }
+        [HttpGet]
         public async Task<IActionResult> Generate(Krzyzowka krzyzowka)
         {
             var tab = await _crossRepository.generowanie(2);
             _crossRepository.Generate(krzyzowka);
             return View(tab);
         }
-        public async Task<IActionResult> Generator()
+        [HttpPost]
+        public async Task<IActionResult> Generator(GenerowanaKrzyzowka tab)
         {
-            var tab = await _crossRepository.generowanie(2);
+            tab = await _crossRepository.generowanie(2);
             return View(tab);
         }
     }
