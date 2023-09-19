@@ -22,6 +22,7 @@
     }
 
 </style>
+<form method="post" asp-action="Generator">
 <div style="display: grid; place-items: center;" class="text-center">
     <h1 class="display-4 fw-bold">Witaj Przybyszu!</h1>
     <p>Tu będzie generator... Kiedyś</p>
@@ -39,30 +40,28 @@
                 </tr>
             }
         </table>
-            <form method="post" asp-controller="Cross" asp-action="Generator">
                 <div class="form-group">
-                    <input asp-for="Odpowiedz1" class="form-control text-black" />
-                    <button type="submit" class="btn btn-outline-success float-right">Generuj</button>
+                    <input type="text" name="odp1" class="form-control text-black" />
                 </div>
                 <div class="form-group">
-                    <input asp-for="Odpowiedz2" class="form-control text-black" />
-                    <button type="submit" class="btn btn-success">Odpowiedz2</button>
+                <input type="text" name="odp2" class="form-control text-black" />
+
                 </div>
                 <div class="form-group">
-                    <input asp-for="Odpowiedz3" class="form-control text-black" />
-                    <button type="submit" class="btn btn-success">Odpowiedz3</button>
+                <input type="text" name="odp3" class="form-control text-black" />
+
                 </div>
                 <div class="form-group">
-                    <input asp-for="Odpowiedz4" class="form-control text-black" />
-                    <button type="submit" class="btn btn-success">Odpowiedz4</button>
+                <input type="text" name="odp4" class="form-control text-black" />
+
                 </div>
                 <div class="form-group">
-                    <input asp-for="Odpowiedz5" class="form-control text-black" />
-                    <button type="submit" class="btn btn-success">Odpowiedz5</button>
+                <input type="text" name="odp5" class="form-control text-black" />
+
                 </div>
                 <div class="form-group">
-                    <input asp-for="Odpowiedz6" class="form-control text-black" />
-                    <button type="submit" class="btn btn-success">Odpowiedz6</button>
+                <input type="text" name="odp6" class="form-control text-black" />
+                <button type="submit" class="btn btn-outline-success float-right" asp-action="Generator">Rozwiaz</button>
                 </div>
-            </form>
 </div>
+</form>
