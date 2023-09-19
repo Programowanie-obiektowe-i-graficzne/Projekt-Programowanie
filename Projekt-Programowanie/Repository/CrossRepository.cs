@@ -408,15 +408,17 @@ namespace Projekt_Programowanie.Repository
             int wspX = wsp_col(slowoX);
             int wspY = wsp_line(slowoX);
             int dlug = dlugosc(slowoX);
-            for (int i = 0; i < dlug; i++)
+            if (slow.Length != dlug-1)
+                return tab;
+                for (int i = 0; i < dlug-1; i++)
             {
+                tab.RozwiazywanaKrzyzowka[wspX, wspY] = s[i].ToString();
                 if (kier == 1)
                 {
                     wspX += 1;
                 }
                 else
                     wspY += 1;
-                tab.RozwiazywanaKrzyzowka[wspY, wspX] = s[i].ToString();
             }
             return tab;
         }

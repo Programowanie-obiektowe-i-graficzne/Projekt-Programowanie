@@ -23,8 +23,7 @@ namespace Projekt_Programowanie.Controllers
         [HttpPost]
         public async Task<IActionResult> Generator(GenerowanaKrzyzowka krzyzowka)
         {
-            if(krzyzowka.Odpowiedz1!="")
-                krzyzowka = _crossRepository.wprowadzenieSlowa(krzyzowka.Odpowiedz1, krzyzowka, 100016);
+            krzyzowka = _crossRepository.wprowadzenieSlowa(krzyzowka.Odpowiedz1, krzyzowka, 100016);
             return RedirectToAction("Generator",krzyzowka);
         }
         [HttpGet]
