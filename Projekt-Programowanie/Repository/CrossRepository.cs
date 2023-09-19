@@ -220,12 +220,45 @@ namespace Projekt_Programowanie.Repository
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
             tab.Krzyzowka = gener.Krzyzowka;
             tab.RozwiazywanaKrzyzowka = gener.Krzyzowka;
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo1, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo2, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo3, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo4, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo5, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo6, tab.RozwiazywanaKrzyzowka);
+            if(gener.Odpowiedz1=="")
+                tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo1, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz1, tab, jaki.Slowo1);
+
+            if (gener.Odpowiedz2 == "")
+                tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo2, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz2, tab, jaki.Slowo2);
+            if (gener.Odpowiedz3 == "")
+                tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo3, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz3, tab, jaki.Slowo3);
+            if (gener.Odpowiedz4 == "")
+                tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo4, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz4, tab, jaki.Slowo4);
+            if (gener.Odpowiedz5 == "")
+                tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo5, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz5, tab, jaki.Slowo5);
+            if (gener.Odpowiedz6 == "")
+                tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo6, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz6, tab, jaki.Slowo6);
+            return tab;
+        }
+        public async Task<GenerowanaKrzyzowka> generowanieDoRozw1(GenerowanaKrzyzowka gener, int wzor)
+        {
+            Wzor jaki = await GetWzorById(wzor);
+            GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
+            tab.Krzyzowka = gener.Krzyzowka;
+            tab.RozwiazywanaKrzyzowka = gener.Krzyzowka;
+            tab = wprowadzenieSlowa(gener.Odpowiedz1, tab, jaki.Slowo1);
+            tab = wprowadzenieSlowa(gener.Odpowiedz2, tab, jaki.Slowo2);
+            tab = wprowadzenieSlowa(gener.Odpowiedz3, tab, jaki.Slowo3);
+            tab = wprowadzenieSlowa(gener.Odpowiedz4, tab, jaki.Slowo4);
+            tab = wprowadzenieSlowa(gener.Odpowiedz5, tab, jaki.Slowo5);
+            tab = wprowadzenieSlowa(gener.Odpowiedz6, tab, jaki.Slowo6);
             return tab;
         }
 
@@ -368,8 +401,9 @@ namespace Projekt_Programowanie.Repository
             }
             return true;
         }
-        public async Task<GenerowanaKrzyzowka> wprowadzenieSlowa(string slow, GenerowanaKrzyzowka tab, int slowoX)
+        public GenerowanaKrzyzowka wprowadzenieSlowa(string slow, GenerowanaKrzyzowka tab, int slowoX)
         {
+            string s = slow;
             int kier = kierunek(slowoX);
             int wspX = wsp_col(slowoX);
             int wspY = wsp_line(slowoX);
@@ -382,7 +416,7 @@ namespace Projekt_Programowanie.Repository
                 }
                 else
                     wspY += 1;
-                tab.Krzyzowka[wspY, wspX] = slow[i].ToString();
+                tab.RozwiazywanaKrzyzowka[wspY, wspX] = s[i].ToString();
             }
             return tab;
         }

@@ -20,21 +20,17 @@ namespace Projekt_Programowanie.Controllers
              var crosses = await _crossRepository.GetKrzyzowki();
             return View(crosses);
         }
-        public IActionResult Generate()
+        [HttpPost]
+        public async Task<IActionResult> Generator(GenerowanaKrzyzowka krzyzowka)
         {
-            return View();
+            if(krzyzowka.Odpowiedz1!="")
+                krzyzowka = _crossRepository.wprowadzenieSlowa(krzyzowka.Odpowiedz1, krzyzowka, 100016);
+            return RedirectToAction("Generator",krzyzowka);
         }
         [HttpGet]
-        public async Task<IActionResult> Generate(Krzyzowka krzyzowka)
+        public async Task<IActionResult> Generator()
         {
             var tab = await _crossRepository.generowanie(2);
-            _crossRepository.Generate(krzyzowka);
-            return View(tab);
-        }
-        [HttpPost]
-        public async Task<IActionResult> Generator(GenerowanaKrzyzowka tab)
-        {
-            tab = await _crossRepository.generowanie(2);
             return View(tab);
         }
     }
