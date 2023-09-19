@@ -225,6 +225,20 @@ namespace Projekt_Programowanie.Repository
             tab = wprowadzPuste(jaki.Slowo6, tab);
             return tab;
         }
+        public async Task<GenerowanaKrzyzowka> generowanieDoRozw1(GenerowanaKrzyzowka gener, int wzor)
+        {
+            Wzor jaki = await GetWzorById(wzor);
+            GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
+            tab.Krzyzowka = gener.Krzyzowka;
+            tab.RozwiazywanaKrzyzowka = gener.Krzyzowka;
+            tab = wprowadzenieSlowa(gener.Odpowiedz1, tab, jaki.Slowo1);
+            tab = wprowadzenieSlowa(gener.Odpowiedz2, tab, jaki.Slowo2);
+            tab = wprowadzenieSlowa(gener.Odpowiedz3, tab, jaki.Slowo3);
+            tab = wprowadzenieSlowa(gener.Odpowiedz4, tab, jaki.Slowo4);
+            tab = wprowadzenieSlowa(gener.Odpowiedz5, tab, jaki.Slowo5);
+            tab = wprowadzenieSlowa(gener.Odpowiedz6, tab, jaki.Slowo6);
+            return tab;
+        }
 
         public async Task<GenerowanaKrzyzowka> generowanie(int wzor)
         {
@@ -368,6 +382,7 @@ namespace Projekt_Programowanie.Repository
 
         public string[,] wprowadzenieSlowa(string slow, string[,] tab, int slowoX)
         {
+            string s = slow;
             int kier = kierunek(slowoX);
             int wspX = wsp_col(slowoX);
             int wspY = wsp_line(slowoX);

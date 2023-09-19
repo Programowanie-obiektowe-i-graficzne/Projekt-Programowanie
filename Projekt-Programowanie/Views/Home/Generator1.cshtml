@@ -8,7 +8,7 @@
         <p>
             <h4>Generator Krzyżówki</h4>
         </p>
-        <form method="post" asp-action=@Url.Action("Generator","Cross")>
+        <form method="post" asp-controller="Cross" asp-action="Generator">
             <div class="form-group">
                 <div class="col-md-8 offset-2">
                     <label asp-for="Trudnosc">Trudność:</label>
