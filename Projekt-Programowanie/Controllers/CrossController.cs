@@ -24,7 +24,6 @@ namespace Projekt_Programowanie.Controllers
         public async Task<IActionResult> Generator()
         {
             var tab = await _crossRepository.generowanie(2);
-            Wzor wzor = await _crossRepository.GetWzorById(2);
             string data1 = HttpContext.Request.Form["odp1"];
             string data2 = HttpContext.Request.Form["odp2"];
             string data3 = HttpContext.Request.Form["odp3"];
@@ -32,17 +31,17 @@ namespace Projekt_Programowanie.Controllers
             string data5 = HttpContext.Request.Form["odp5"];
             string data6 = HttpContext.Request.Form["odp6"];
             if (data1 != null)
-                tab = _crossRepository.wprowadzenieSlowa(data1, tab, wzor.Slowo1);
+                tab = _crossRepository.wprowadzenieSlowa(data1, tab, 100016);
             if (data2 != null)
-                tab = _crossRepository.wprowadzenieSlowa(data2, tab, wzor.Slowo2);
+                tab = _crossRepository.wprowadzenieSlowa(data2, tab, 201005);
             if (data3 != null)
-                tab = _crossRepository.wprowadzenieSlowa(data3, tab, wzor.Slowo3);
+                tab = _crossRepository.wprowadzenieSlowa(data3, tab, 100037);
             if (data4 != null)
-                tab = _crossRepository.wprowadzenieSlowa(data4, tab, wzor.Slowo4);
+                tab = _crossRepository.wprowadzenieSlowa(data4, tab, 204006);
             if (data5 != null)
-                tab = _crossRepository.wprowadzenieSlowa(data5, tab, wzor.Slowo5);
+                tab = _crossRepository.wprowadzenieSlowa(data5, tab, 102057);
             if (data6 != null)
-                tab = _crossRepository.wprowadzenieSlowa(data6, tab, wzor.Slowo6);
+                tab = _crossRepository.wprowadzenieSlowa(data6, tab, 206025);
             return View(tab);
         }
         public IActionResult Sprawdzam(GenerowanaKrzyzowka tab)
