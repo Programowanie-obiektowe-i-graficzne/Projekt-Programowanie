@@ -214,20 +214,53 @@ namespace Projekt_Programowanie.Repository
             return pomoc;
         }
 
-        public async Task<GenerowanaKrzyzowka> generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor)
+        public string[,] generowanieDoRozw(string[,] gener, Wzor jaki)
         {
             Wzor jaki = await GetWzorById(wzor);
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
             tab.Krzyzowka = gener.Krzyzowka;
             tab.RozwiazywanaKrzyzowka = gener.Krzyzowka;
+            if(gener.Odpowiedz1=="")
                 tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo1, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz1, tab, jaki.Slowo1);
+
+            if (gener.Odpowiedz2 == "")
                 tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo2, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz2, tab, jaki.Slowo2);
+            if (gener.Odpowiedz3 == "")
                 tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo3, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz3, tab, jaki.Slowo3);
+            if (gener.Odpowiedz4 == "")
                 tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo4, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz4, tab, jaki.Slowo4);
+            if (gener.Odpowiedz5 == "")
                 tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo5, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz5, tab, jaki.Slowo5);
+            if (gener.Odpowiedz6 == "")
                 tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo6, tab.RozwiazywanaKrzyzowka);
+            else
+                tab = wprowadzenieSlowa(gener.Odpowiedz6, tab, jaki.Slowo6);
             return tab;
         }
+        public async Task<GenerowanaKrzyzowka> generowanieDoRozw1(GenerowanaKrzyzowka gener, int wzor)
+        {
+            Wzor jaki = await GetWzorById(wzor);
+            GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
+            tab.Krzyzowka = gener.Krzyzowka;
+            tab.RozwiazywanaKrzyzowka = gener.Krzyzowka;
+            tab = wprowadzenieSlowa(gener.Odpowiedz1, tab, jaki.Slowo1);
+            tab = wprowadzenieSlowa(gener.Odpowiedz2, tab, jaki.Slowo2);
+            tab = wprowadzenieSlowa(gener.Odpowiedz3, tab, jaki.Slowo3);
+            tab = wprowadzenieSlowa(gener.Odpowiedz4, tab, jaki.Slowo4);
+            tab = wprowadzenieSlowa(gener.Odpowiedz5, tab, jaki.Slowo5);
+            tab = wprowadzenieSlowa(gener.Odpowiedz6, tab, jaki.Slowo6);
+            return tab;
+        }*/
 
         public async Task<GenerowanaKrzyzowka> generowanie(int wzor)
         {
@@ -350,45 +383,46 @@ namespace Projekt_Programowanie.Repository
             tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, "4. "+p4.Tresc);
             tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, "5. "+p5.Tresc);
             tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, "6. "+p6.Tresc);
-            tab = await generowanieDoRozw(tab, wzor);
+            tab.RozwiazywanaKrzyzowka = generowanieDoRozw(tab.Krzyzowka, jaki);
             return tab;
         }
 
-        public bool sprawdzanie(GenerowanaKrzyzowka uzytkownika, GenerowanaKrzyzowka odpo)
+        public bool sprawdzanie(GenerowanaKrzyzowka sprawdzanie)
         {
-            for (int i = 0; i < uzytkownika.Krzyzowka.Length; i++)
+            bool czy = true;
+            for (int i = 0; i < sprawdzanie.RozwiazywanaKrzyzowka.GetLength(0); i++)
             {
-                for (int j = 0; j < uzytkownika.Krzyzowka.Length; j++)
+                for (int j = 0; j < sprawdzanie.RozwiazywanaKrzyzowka.GetLength(0); j++)
                 {
-                    if (uzytkownika.Krzyzowka[i, j] != odpo.Krzyzowka[i, j])
+                    if (sprawdzanie.RozwiazywanaKrzyzowka[i, j] != sprawdzanie.Krzyzowka[i, j])
                     {
-                        return false;
+                        czy = false;
                     }
                 }
             }
             return true;
         }
-        public GenerowanaKrzyzowka wprowadzenieSlowa(string slow, GenerowanaKrzyzowka tab, int slowoX)
+
+        public string[,] wprowadzenieSlowa(string slow, string[,] tab, int slowoX)
         {
-            GenerowanaKrzyzowka x = tab;
             string s = slow;
             int kier = kierunek(slowoX);
             int wspY = wsp_col(slowoX);
             int wspX = wsp_line(slowoX);
             int dlug = dlugosc(slowoX);
-            if (slow.Length != dlug-1 || s == null)
-                return tab;
-                for (int i = 0; i < dlug-1; i++)
+            for (int i = 0; i < dlug; i++)
             {
                 if (kier == 1)
                 {
                     wspX += 1;
                 }
                 else
+                {
                     wspY += 1;
-                x.RozwiazywanaKrzyzowka[wspX, wspY] = s[i].ToString();
+                    tab.RozwiazywanaKrzyzowka[wspY, wspX] = s[i].ToString();
+                }
+                return x;
             }
-            return x;
         }
         public String znajdzSlowo(IEnumerable<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
         {
