@@ -13,7 +13,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
     options.EnableSensitiveDataLogging(); // To w³¹cza bardziej szczegó³owe logi
-}); 
+});
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<ICrossRepository, CrossRepository>();
@@ -32,6 +32,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -52,6 +53,5 @@ app.UseEndpoints(endpoints =>
         pattern: "Word/{action}", // Dla akcji w kontrolerze "Word"
         defaults: new { controller = "Word" });
 });
-
 
 app.Run();

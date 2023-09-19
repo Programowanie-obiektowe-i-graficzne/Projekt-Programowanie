@@ -6,7 +6,7 @@
 <style>
     #pole_krzyzowki {
         width: 800px;
-        height: 800px;
+        height: 1000px;
         display: grid;
         place-items: center;
         background-color: #ccff99;
@@ -27,25 +27,41 @@
     <p>Tu będzie generator... Kiedyś</p>
     <div id="pole_krzyzowki">
         <table width="600" height="600">
-            @for (int row = 0; row < Model.Krzyzowka.GetLength(0); row++)
+            @for (int row = 0; row < Model.RozwiazywanaKrzyzowka.GetLength(0); row++)
             {
                 <tr>
-                    @for (int col = 0; col < Model.Krzyzowka.GetLength(1); col++)
+                    @for (int col = 0; col < Model.RozwiazywanaKrzyzowka.GetLength(1); col++)
                     {
                         <td id="kratka">
-                            @Model.Krzyzowka[row, col]
+                            @Model.RozwiazywanaKrzyzowka[row, col]
                         </td>
                     }
                 </tr>
             }
         </table>
         <div>
-            <input class="text-black" />
-            <input class="btn btn-success" type="submit" value="Odpowiedz" />
+            <input asp-for="Odpowiedz1" class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz1" />
         </div>
-    </div>
-    <div>
-        <input class="text-black" />
-        <input class="btn btn-success" type="submit" value="Sprawdź" />
+        <div>
+            <input asp-for="Odpowiedz2" class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz2" />
+        </div>
+        <div>
+            <input asp-for="Odpowiedz3" class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz3" />
+        </div>
+        <div>
+            <input asp-for="Odpowiedz4" class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz4" />
+        </div>
+        <div>
+            <input asp-for="Odpowiedz5" class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz5" />
+        </div>
+        <div>
+            <input asp-for="Odpowiedz6" class="text-black" />
+            <input class="btn btn-success" type="submit" value="Odpowiedz6" />
+        </div>
     </div>
 </div>
