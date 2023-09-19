@@ -214,18 +214,15 @@ namespace Projekt_Programowanie.Repository
             return pomoc;
         }
 
-        public async Task<GenerowanaKrzyzowka> generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor)
+        public string[,] generowanieDoRozw(string[,] gener, Wzor jaki)
         {
-            Wzor jaki = await GetWzorById(wzor);
-            GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
-            tab.Krzyzowka = gener.Krzyzowka;
-            tab.RozwiazywanaKrzyzowka = gener.Krzyzowka;
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo1, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo2, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo3, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo4, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo5, tab.RozwiazywanaKrzyzowka);
-            tab.RozwiazywanaKrzyzowka = wprowadzPuste(jaki.Slowo6, tab.RozwiazywanaKrzyzowka);
+            string[,] tab = gener;
+            tab = wprowadzPuste(jaki.Slowo1, tab);
+            tab = wprowadzPuste(jaki.Slowo2, tab);
+            tab = wprowadzPuste(jaki.Slowo3, tab);
+            tab = wprowadzPuste(jaki.Slowo4, tab);
+            tab = wprowadzPuste(jaki.Slowo5, tab);
+            tab = wprowadzPuste(jaki.Slowo6, tab);
             return tab;
         }
 
@@ -350,11 +347,11 @@ namespace Projekt_Programowanie.Repository
             tab.Krzyzowka = wprowadz(slowo4, tab.Krzyzowka, ss4, "4. "+p4.Tresc);
             tab.Krzyzowka = wprowadz(slowo5, tab.Krzyzowka, ss5, "5. "+p5.Tresc);
             tab.Krzyzowka = wprowadz(slowo6, tab.Krzyzowka, ss6, "6. "+p6.Tresc);
-            tab = await generowanieDoRozw(tab, wzor);
+            tab.RozwiazywanaKrzyzowka = generowanieDoRozw(tab.Krzyzowka, jaki);
             return tab;
         }
 
-        public bool sprawdzanie(GenerowanaKrzyzowka uzytkownika, GenerowanaKrzyzowka odpo)
+        /*public bool sprawdzanie(string[,] uzytkownika, string[,] odpo)
         {
             for (int i = 0; i < uzytkownika.Krzyzowka.Length; i++)
             {
@@ -367,8 +364,9 @@ namespace Projekt_Programowanie.Repository
                 }
             }
             return true;
-        }
-        public async Task<GenerowanaKrzyzowka> wprowadzenieSlowa(string slow, GenerowanaKrzyzowka tab, int slowoX)
+        }*/
+
+        public string[,] wprowadzenieSlowa(string slow, string[,] tab, int slowoX)
         {
             int kier = kierunek(slowoX);
             int wspX = wsp_col(slowoX);
@@ -382,7 +380,7 @@ namespace Projekt_Programowanie.Repository
                 }
                 else
                     wspY += 1;
-                tab.Krzyzowka[wspY, wspX] = slow[i].ToString();
+                tab[wspY, wspX] = slow[i].ToString();
             }
             return tab;
         }

@@ -12,9 +12,9 @@ namespace Projekt_Programowanie.Interfaces
         public Task<IEnumerable<Wzor>> GetWzory();
         public Task<Wzor> GetWzorById(int id);
         public Task<GenerowanaKrzyzowka> generowanie(int wzor);
-        public Task<GenerowanaKrzyzowka> generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor);
+        public string[,] generowanieDoRozw(string[,] gener, Wzor jaki);
         public Task<Slowo> GetSlowoNaz(string nazwa);
-        public Task<GenerowanaKrzyzowka> wprowadzenieSlowa(string slow, GenerowanaKrzyzowka tab, int slowoX);
+        public string[,] wprowadzenieSlowa(string slow, string[,] tab, int slowoX);
         bool Generate(Krzyzowka krzyzowka);
         bool Save();
     }
