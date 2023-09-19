@@ -626,6 +626,23 @@ namespace Projekt_Programowanie.Repository
         {
             return await _context.Krzyzowki.FirstOrDefaultAsync(p => p.ID_Krzyzowki==id);
         }
+        public bool sprawdzanie(GenerowanaKrzyzowka sprawdzanie)
+        {
+            if (sprawdzanie.RozwiazywanaKrzyzowka == null)
+                return false;
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+   
+                    if (sprawdzanie.RozwiazywanaKrzyzowka[i, j] != sprawdzanie.Krzyzowka[i, j])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         public bool Generate(Krzyzowka krzyzowka)
         {
             _context.Add(krzyzowka);
