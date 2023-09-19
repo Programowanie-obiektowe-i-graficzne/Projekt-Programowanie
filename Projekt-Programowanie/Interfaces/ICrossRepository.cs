@@ -15,6 +15,7 @@ namespace Projekt_Programowanie.Interfaces
         public Task<GenerowanaKrzyzowka> generowanieDoRozw(GenerowanaKrzyzowka gener, int wzor);
         public Task<Slowo> GetSlowoNaz(string nazwa);
         public GenerowanaKrzyzowka wprowadzenieSlowa(string slow, GenerowanaKrzyzowka tab, int slowoX);
+        public bool sprawdzanie(GenerowanaKrzyzowka tab);
         bool Generate(Krzyzowka krzyzowka);
         bool Save();
     }

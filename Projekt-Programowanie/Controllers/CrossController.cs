@@ -17,7 +17,7 @@ namespace Projekt_Programowanie.Controllers
         }
         public async Task<IActionResult> Cross()
         {
-             var crosses = await _crossRepository.GetKrzyzowki();
+            var crosses = await _crossRepository.GetKrzyzowki();
             return View(crosses);
         }
 
@@ -31,7 +31,7 @@ namespace Projekt_Programowanie.Controllers
             string data5 = HttpContext.Request.Form["odp5"];
             string data6 = HttpContext.Request.Form["odp6"];
             if (data1 != null)
-                tab = _crossRepository.wprowadzenieSlowa(data1,tab, 100016);
+                tab = _crossRepository.wprowadzenieSlowa(data1, tab, 100016);
             if (data2 != null)
                 tab = _crossRepository.wprowadzenieSlowa(data2, tab, 201005);
             if (data3 != null)
@@ -44,6 +44,22 @@ namespace Projekt_Programowanie.Controllers
                 tab = _crossRepository.wprowadzenieSlowa(data6, tab, 206025);
             return View(tab);
         }
+        [HttpPost]
+        public IActionResult Sprawdzam(GenerowanaKrzyzowka tab)
+        {
+            if (_crossRepository.sprawdzanie(tab) == true)
+            {
+                return View("Gratulacje"); // Przekierowanie do widoku gratulacyjnego
+            }
+            return View("Zla"); 
+        }
+        public IActionResult Gratulecje()
+        {
+            return View();
+        }
+        public IActionResult Zla()
+        {
+            return View();
+        }
     }
-        
-}
+    }
