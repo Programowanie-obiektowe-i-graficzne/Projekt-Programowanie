@@ -23,16 +23,35 @@ namespace Projekt_Programowanie.Controllers
         [HttpPost]
         public async Task<IActionResult> Generator(GenerowanaKrzyzowka krzyzowka)
         {
-            if(krzyzowka.Odpowiedz1!="")
-                krzyzowka = _crossRepository.wprowadzenieSlowa(krzyzowka.Odpowiedz1, krzyzowka, 100016);
-            return RedirectToAction("Generator",krzyzowka);
+            if (!string.IsNullOrEmpty(krzyzowka.Odpowiedz1))
+            {
+                krzyzowka.RozwiazywanaKrzyzowka = _crossRepository.wprowadzenieSlowa("wanna", krzyzowka.RozwiazywanaKrzyzowka, 101006);
+            }
+
+            TempData["krzyzowka"] = krzyzowka; // Zachowaj stan krzyzowka w TempData
+
+            return RedirectToAction("Generator");
         }
+
         [HttpGet]
         public async Task<IActionResult> Generator()
         {
-            var tab = await _crossRepository.generowanie(2);
-            return View(tab);
+            GenerowanaKrzyzowka krzyzowka;
+
+            if (TempData.ContainsKey("krzyzowka"))
+            {
+                krzyzowka = (GenerowanaKrzyzowka)TempData["krzyzowka"];
+            }
+            else
+            {
+                var tab = await _crossRepository.generowanie(2);
+                krzyzowka = new GenerowanaKrzyzowka { RozwiazywanaKrzyzowka = tab.RozwiazywanaKrzyzowka };
+            }
+
+            return View(krzyzowka);
         }
+
+
     }
-        
+
 }

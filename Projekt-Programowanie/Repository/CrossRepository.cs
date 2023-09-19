@@ -225,7 +225,7 @@ namespace Projekt_Programowanie.Repository
             tab = wprowadzPuste(jaki.Slowo6, tab);
             return tab;
         }
-        public async Task<GenerowanaKrzyzowka> generowanieDoRozw1(GenerowanaKrzyzowka gener, int wzor)
+        /*public async Task<GenerowanaKrzyzowka> generowanieDoRozw1(GenerowanaKrzyzowka gener, int wzor)
         {
             Wzor jaki = await GetWzorById(wzor);
             GenerowanaKrzyzowka tab = new GenerowanaKrzyzowka();
@@ -238,7 +238,7 @@ namespace Projekt_Programowanie.Repository
             tab = wprowadzenieSlowa(gener.Odpowiedz5, tab, jaki.Slowo5);
             tab = wprowadzenieSlowa(gener.Odpowiedz6, tab, jaki.Slowo6);
             return tab;
-        }
+        }*/
 
         public async Task<GenerowanaKrzyzowka> generowanie(int wzor)
         {
@@ -365,36 +365,39 @@ namespace Projekt_Programowanie.Repository
             return tab;
         }
 
-        /*public bool sprawdzanie(string[,] uzytkownika, string[,] odpo)
+        public bool sprawdzanie(GenerowanaKrzyzowka sprawdzanie)
         {
-            for (int i = 0; i < uzytkownika.Krzyzowka.Length; i++)
+            for (int i = 0; i < sprawdzanie.RozwiazywanaKrzyzowka.Length; i++)
             {
-                for (int j = 0; j < uzytkownika.Krzyzowka.Length; j++)
+                for (int j = 0; j < sprawdzanie.RozwiazywanaKrzyzowka.Length; j++)
                 {
-                    if (uzytkownika.Krzyzowka[i, j] != odpo.Krzyzowka[i, j])
+                    if (sprawdzanie.RozwiazywanaKrzyzowka[i, j] != sprawdzanie.Krzyzowka[i, j])
                     {
                         return false;
                     }
                 }
             }
             return true;
-        }*/
+        }
 
         public string[,] wprowadzenieSlowa(string slow, string[,] tab, int slowoX)
         {
-            string s = slow;
             int kier = kierunek(slowoX);
             int wspX = wsp_col(slowoX);
             int wspY = wsp_line(slowoX);
             int dlug = dlugosc(slowoX);
-            for (int i = 0; i < dlug; i++)
+            if (slow.Length < dlug)
+                return tab;
+            for (int i = 0; i < dlug - 1; i++)
             {
                 if (kier == 1)
                 {
                     wspX += 1;
                 }
                 else
+                {
                     wspY += 1;
+                }
                 tab[wspY, wspX] = slow[i].ToString();
             }
             return tab;
