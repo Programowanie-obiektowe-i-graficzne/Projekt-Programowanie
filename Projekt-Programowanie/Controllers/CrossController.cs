@@ -44,6 +44,7 @@ namespace Projekt_Programowanie.Controllers
                 tab = _crossRepository.wprowadzenieSlowa(data6, tab, 206025);
             return View(tab);
         }
+        [HttpPost]
         public IActionResult Sprawdzam(GenerowanaKrzyzowka tab)
         {
             if (_crossRepository.sprawdzanie(tab) == true)
