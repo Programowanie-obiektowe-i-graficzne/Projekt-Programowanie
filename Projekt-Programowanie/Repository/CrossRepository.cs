@@ -389,13 +389,14 @@ namespace Projekt_Programowanie.Repository
 
         public bool sprawdzanie(GenerowanaKrzyzowka sprawdzanie)
         {
-            for (int i = 0; i < sprawdzanie.RozwiazywanaKrzyzowka.Length; i++)
+            bool czy = true;
+            for (int i = 0; i < sprawdzanie.RozwiazywanaKrzyzowka.GetLength(0); i++)
             {
-                for (int j = 0; j < sprawdzanie.RozwiazywanaKrzyzowka.Length; j++)
+                for (int j = 0; j < sprawdzanie.RozwiazywanaKrzyzowka.GetLength(0); j++)
                 {
                     if (sprawdzanie.RozwiazywanaKrzyzowka[i, j] != sprawdzanie.Krzyzowka[i, j])
                     {
-                        return false;
+                        czy = false;
                     }
                 }
             }
@@ -418,9 +419,10 @@ namespace Projekt_Programowanie.Repository
                 else
                 {
                     wspY += 1;
-                tab.RozwiazywanaKrzyzowka[wspY, wspX] = s[i].ToString();
+                    tab.RozwiazywanaKrzyzowka[wspY, wspX] = s[i].ToString();
+                }
+                return x;
             }
-            return x;
         }
         public String znajdzSlowo(IEnumerable<Slowo> lista, int polocz1, int polocz2, int polocz3, int polocz4, int polocz5, String slow1, String slow2, String slow3, String slow4, String slow5, int ziarno)
         {
